@@ -1,0 +1,12 @@
+.gallery__container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+.gallery__container article{
+
+    border: 1rem solid transparent;
+    transition:  var(--transition);
+}
+.gallery__container article:hover{
+    border-color: var(--color-gray-500);
+}
