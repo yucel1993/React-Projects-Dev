@@ -1,16 +1,32 @@
-import Avatar from "@mui/material/Avatar"
-import Container from "@mui/material/Container"
-import Grid from "@mui/material/Grid"
-import Typography from "@mui/material/Typography"
-import LockIcon from "@mui/icons-material/Lock"
-import image from "../assets/result.svg"
-import { Link, useNavigate } from "react-router-dom"
-import Box from "@mui/material/Box"
-import TextField from "@mui/material/TextField"
-import { Button } from "@mui/material"
+import React from "react";
+import Avatar from "@mui/material/Avatar";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import LockIcon from "@mui/icons-material/Lock";
+import image from "../assets/result.svg";
+import { Link, useNavigate } from "react-router-dom";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
+import { Form, Formik } from "formik";
+import { object, string } from "yup";
+
+import useAuthCall from "../hooks/useAuthCall";
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const {login} =useAuthCall()
+
+  let loginSchema = object({
+    email: string().email("hahahahha").required(),
+    password: string()
+      .required()
+      .min(8, "at least 8 caracters")
+      .max(16, "not more than 16 characters")
+      .matches(/\d+/, "At least 1 number")
+      .matches(/[!,?{}><%&$#+-.}]+/, "At least one special characters"),
+  });
 
   return (
     <Container maxWidth="lg">
@@ -49,31 +65,52 @@ const Login = () => {
             Login
           </Typography>
 
-          <Box
-            component="form"
-            sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={loginSchema}
+            onSubmit={(values, actions) => {
+              login(values);
+              actions.resetForm();
+              actions.setSubmitting(false);
+            }}
           >
-            <TextField
-              label="Email"
-              name="email"
-              id="email"
-              type="email"
-              variant="outlined"
-            />
-            <TextField
-              label="password"
-              name="password"
-              id="password"
-              type="password"
-              variant="outlined"
-            />
-            <Button variant="contained" type="submit">
-              Submit
-            </Button>
-          </Box>
+            {({ handleChange, handleBlur, values, touched, errors }) => (
+              <Form>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <TextField
+                    label="Email"
+                    name="email"
+                    id="email"
+                    type="email"
+                    variant="outlined"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                    error={touched.email && Boolean(errors.email)}
+                    helperText={touched.email && errors.email}
+                  />
+                  <TextField
+                    label="Password"
+                    name="password"
+                    id="password"
+                    type="password"
+                    variant="outlined"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
+                    error={touched.password && errors.password}
+                    helperText={touched.password && errors.password}
+                  />
+                  <Button variant="contained" type="submit">
+                    Submit
+                  </Button>
+                </Box>
+              </Form>
+            )}
+          </Formik>
 
           <Box sx={{ textAlign: "center", mt: 2 }}>
-            <Link to="/register">Do you have not an account?</Link>
+            <Link to="/register">Don't have an account?</Link>
           </Box>
         </Grid>
 
@@ -84,7 +121,7 @@ const Login = () => {
         </Grid>
       </Grid>
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

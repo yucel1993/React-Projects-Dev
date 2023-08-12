@@ -20,7 +20,13 @@ export const Home = () => {
 
 
     
-    const getCategories=(API)=>{
+    
+  
+    //sayfa ilk render olduğunda gelen veriler
+  
+
+    useEffect(() => {
+      const getCategories=(API)=>{
   
       axios(API)
       .then((res)=>{
@@ -30,21 +36,17 @@ export const Home = () => {
       .catch((err)=>console.log(err))
     }
   
-    //sayfa ilk render olduğunda gelen veriler
-    const get_all_products=(API)=>{
-    axios(API)
-    .then((res)=>setProducts(res.data.products))
-    .catch((err)=>console.log(err))
-  }
-
-    useEffect(() => {
-  
       getCategories(API_CATEGORIES)
   
     }, [])
 
 
     useEffect(() => {
+        const get_all_products=(API)=>{
+    axios(API)
+    .then((res)=>setProducts(res.data.products))
+    .catch((err)=>console.log(err))
+  }
         get_all_products(API_ALL_PRODUCTS)
     }, [])
 
