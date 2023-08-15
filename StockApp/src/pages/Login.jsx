@@ -87,7 +87,7 @@ const Login = () => {
                     onBlur={handleBlur}
                     value={values.email}
                     error={touched.email && Boolean(errors.email)}
-                    helperText={touched.email && errors.email}
+                    helperText={errors.email}
                   />
                   <TextField
                     label="Password"
@@ -98,8 +98,8 @@ const Login = () => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.password}
-                    error={touched.password && errors.password}
-                    helperText={touched.password && errors.password}
+                    error={touched.password && Boolean(errors.password)}
+                    helperText={errors.password}
                   />
                   <Button variant="contained" type="submit">
                     Submit
