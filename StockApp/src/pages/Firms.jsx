@@ -26,7 +26,7 @@ const Firms = () => {
   useEffect(() => {
     getStockData("firms");
   }, []);
-  console.log(firms);
+ 
   return (
     <>
       <Typography variant="h4" color={"error"} mb={3}>
