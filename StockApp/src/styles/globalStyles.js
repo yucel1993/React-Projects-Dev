@@ -1,6 +1,10 @@
 export const btnStyle={
     "&:hover" :{color:"red", cursor:"pointer"}
 }
+export const editbtnStyle={
+    "&:hover" :{color:"orange", cursor:"pointer"}
+}
+
 
 
 export const ModalStyle = {

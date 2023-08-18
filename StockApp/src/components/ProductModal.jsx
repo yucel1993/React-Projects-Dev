@@ -20,7 +20,7 @@ export default function ProductModal({ open, handleClose }) {
     "brand_id":"" 
     });
   const { postStockData } = useStockCall();
-  const {products,brands}=useSelector(state=>state.stock)
+  const {categories,brands}=useSelector(state=>state.stock)
 
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
@@ -29,15 +29,24 @@ export default function ProductModal({ open, handleClose }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     postStockData("products", info);
-
-    // setInfo({ name: "", address: "", tel: "", image: "" });     WE HAVE ALREADY DONE IN THE HANDLECLOSE FUNCTION IN FIRM COMPONENT
+    console.log(info)
+    setInfo({
+      "name": "",
+      "category_id": "",
+      "brand_id":"" 
+      });    
     handleClose();
   };
   return (
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={()=>{handleClose()
+          setInfo({
+            "name": "",
+            "category_id": "",
+            "brand_id":"" 
+            })}}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -52,12 +61,12 @@ export default function ProductModal({ open, handleClose }) {
               <Select
                 labelId="categories"
                 id="categories"
-                name="categories"
+                name="category_id"
                 value={info.category_id}
                 label="categories"
                 onChange={handleChange}
               >
-               {products.map(({name,id})=>( <MenuItem key={id} value={id}>{name}</MenuItem>
+               {categories.map(({name,id})=>( <MenuItem key={id} value={id}>{name}</MenuItem>
               
               ))}</Select>
             </FormControl>
@@ -67,7 +76,7 @@ export default function ProductModal({ open, handleClose }) {
               <Select
                 labelId="brand"
                 id="brand"
-                name="brand"
+                name="brand_id"
                 value={info.brand_id}
                 label="brand"
                 onChange={handleChange}

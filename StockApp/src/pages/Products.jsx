@@ -7,17 +7,20 @@ import { useEffect } from "react";
 
 
 const Products = () => {
-  const {getStockData}=useStockCall()
+  const {getStockData,getProdCatBrands}=useStockCall()
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
   };
   useEffect(() => {
-    getStockData("products");
-    getStockData("brands");
-    getStockData("categories");
-  }, []);
+    // getStockData("products")
+    // getStockData("categories")
+    // getStockData("brands")
+
+    //! Promise.all ile es zamanli istek atilan fonks.
+    getProdCatBrands()
+  }, [])
 
   return (
     <div>

@@ -1,56 +1,111 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
+import { GridDeleteForeverIcon } from "@mui/x-data-grid";
+import { btnStyle, editbtnStyle } from "../styles/globalStyles";
+import EditIcon from "@mui/icons-material/Edit";
+import { useSelector } from "react-redux";
+import useStockCall from "../hooks/useStockCall";
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'firstName',
-    headerName: 'First name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'lastName',
-    headerName: 'Last name',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 110,
-    editable: true,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.row.firstName || ''} ${params.row.lastName || ''}`,
-  },
-];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
 
-export default function SalesTable({setInfo,handleOpen}) {
+export default function SalesTable({ setInfo, handleOpen }) {
+  const {sales} =useSelector((state)=>state.stock)
+  const {deleteStockData,putStockData} = useStockCall()
+  const columns = [
+    { field: "id", headerName: "#", width: 90 },
+    {
+      field: "createds",
+      headerName: "Date",
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "brand",
+      headerName: "Brand",
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "product",
+      headerName: "Product",
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "quantity",
+      headerName: "Quantity",
+      type: "number",
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "price",
+      headerName: "Price",
+      type: "number",
+      align: "center",
+      headerAlign: "center",
+    },
+    {
+      field: "amount",
+      headerName: "Amount",
+  
+      align: "center",
+      headerAlign: "center",
+      valueGetter: (params) => {
+        const quantity = params.row.quantity;
+        const price = params.row.price;
+        return quantity * price;
+      },
+    },
+    {
+      field: "editActions",
+      type: "actions",
+      headerName: "Actions",
+    
+      headerAlign: "center",
+      align: "center",
+      getActions: (props) => [
+        <GridActionsCellItem
+          icon={<EditIcon />}
+          label="Edit"
+          sx={editbtnStyle}
+          onClick={() => {
+            setInfo(props.row);
+            handleOpen();
+            // Handle edit action here
+            // putStockData("sales",props.id)
+            console.log(props.id)
+           
+            // You can call setInfo here if needed
+          }}
+        />,
+      ],
+    },
+    // Delete Action Column
+    {
+      field: "deleteActions",
+      type: "actions",
+      headerName: "Actions",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      getActions: (props) => [
+        <GridActionsCellItem
+          icon={<GridDeleteForeverIcon />}
+          label="Delete"
+          sx={btnStyle}
+          onClick={() => {
+            deleteStockData("sales", props.id);
+          }}
+        />,
+      ],
+    },
+  ];
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box sx={{  width: "100%" }}>
       <DataGrid
-        rows={rows}
+        rows={sales}
         columns={columns}
         initialState={{
           pagination: {
@@ -60,8 +115,8 @@ export default function SalesTable({setInfo,handleOpen}) {
           },
         }}
         pageSizeOptions={[5]}
-        checkboxSelection
         disableRowSelectionOnClick
+        slots={{ toolbar: GridToolbar }}
       />
     </Box>
   );

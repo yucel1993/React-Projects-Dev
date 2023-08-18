@@ -6,31 +6,29 @@ import Modal from "@mui/material/Modal";
 import { ModalStyle } from "../styles/globalStyles";
 import { useSelector } from "react-redux";
 import { InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import useStockCall from "../hooks/useStockCall";
 
 export default function SalesModal({ open, handleClose, info, setInfo }) {
   const { brands, products } = useSelector((state) => state.stock);
+  const { postStockData,putStockData } = useStockCall();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-  
-    // Convert the 'quantity' value to an integer if it's a valid number
-    const intValue = name === "quantity" && !isNaN(value) ? parseInt(value) : value;
-  
+
+    // Convert the 'quantity' value to an integer
+    const intValue = name === "quantity" ? parseInt(value) : value;
+
     setInfo((prevInfo) => ({
       ...prevInfo,
       [name]: intValue,
     }));
   };
-//   This change should prevent the NaN issue you're encountering. Make sure to apply this updated function to your code and test it to see if the error is resolved.
-  
-  
-  
-  
-  
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(info);
+    info.id ? putStockData("sales",info) :  postStockData("sales", info);
+   
     handleClose();
   };
 
@@ -38,13 +36,21 @@ export default function SalesModal({ open, handleClose, info, setInfo }) {
     <div>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={() => {
+          setInfo({
+            brand_id: 0,
+            product_id: 0,
+            quantity: 0,
+            price: "string",
+          });
+          handleClose();
+        }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={ModalStyle}>
           <Box
-            type="submit"
+            component="form"
             style={{ display: "flex", flexDirection: "column", gap: "4" }}
             onSubmit={handleSubmit}
           >

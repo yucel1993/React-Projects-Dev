@@ -27,6 +27,13 @@ const stockSlice = createSlice({
       state.loading = false
       state[payload.url] = payload.data
     },
+       // ? Products, categories ve brands state'lerini güncelleyen action fonks.
+       getProdCatBrandsSuccess: (state, { payload }) => {
+        state.loading = false
+        state.products = payload[0]
+        state.categories = payload[1]
+        state.brands = payload[2]
+      },
 
     fetchFail: (state) => {
       state.loading = false;
@@ -35,10 +42,12 @@ const stockSlice = createSlice({
   },
 });
 
+
+
 export const {
   fetchStart,
   getStockSuccess,
-
+  getProdCatBrandsSuccess,
   fetchFail,
 } = stockSlice.actions;
 export default stockSlice.reducer;
