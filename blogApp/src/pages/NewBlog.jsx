@@ -1,9 +1,34 @@
 import { Box, Button, MenuItem, Paper, Select, TextField } from "@mui/material";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import useBlogCall from "../hooks/useBlogCall";
 
 const NewBlog = () => {
+  const { categories } = useSelector((state) => state.blog);
+  const {createBlog}=useBlogCall()
+
+  const data = categories.data;
+  console.log(data);
+  const [info, setInfo] = useState({
+    title: "",
+    content: "",
+    image: "",
+    category: "",
+    status: "",
+    slug: "",
+  });
+  const handleChange = (e) => {
+    setInfo({ ...info, [e.target.name]: e.target.value });
+    console.log(info)
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createBlog({...info,slug:info.content})
+
+  };
   return (
-    <div style={{marginTop:"2rem"}}>
-      <Box >
+    <div style={{ marginTop: "2rem" }}>
+      <Box>
         <Paper
           elevation={3}
           sx={{ width: "15rem", padding: "1rem", margin: "auto" }}
@@ -12,7 +37,7 @@ const NewBlog = () => {
           <Box
             sx={{ display: "flex", flexDirection: "column", gap: 2 }}
             component="form"
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
           >
             <h2>New Blog</h2>
             <TextField
@@ -21,8 +46,8 @@ const NewBlog = () => {
               type="text"
               variant="outlined"
               name="title"
-              // value={info?.price || ""}
-              // onChange={handleChange}
+              value={info?.title || ""}
+              onChange={handleChange}
               required
             />
             <TextField
@@ -31,43 +56,50 @@ const NewBlog = () => {
               type="url"
               variant="outlined"
               name="image"
-              // value={info?.price || ""}
-              // onChange={handleChange}
+              value={info?.image || ""}
+              onChange={handleChange}
               required
             />
             <Select
               label="Category"
               id="category"
-              name="product_id"
-              // value={info?.product_id || ""}
-              // onChange={handleChange}
+              name="category"
+              value={info?.category || ""}
+              onChange={handleChange}
               required
             >
-              <MenuItem onClick={() => navigate("/stock/products")}>
+              {/* <MenuItem onClick={() => navigate("/stock/products")}>
                 category
-              </MenuItem>
-              {/* <hr />
-                {products?.map((item) => {
-                  return (
-                    <MenuItem key={item.id} value={item.id}>
-                      {item.name}
-                    </MenuItem>
-                  )
-                })} */}
+              </MenuItem> */}
+              <hr />
+              {data?.map((item) => {
+                return (
+                  <MenuItem key={item.id} value={item.id}>
+                    {item.name}
+                  </MenuItem>
+                );
+              })}
             </Select>
 
+            {/* <MenuItem >
+                      rtzrtz
+                    </MenuItem>
+                    </Select>  */}
             {/* Seconf Select */}
 
             <Select
               label="Status"
               id="status"
               name="status"
-              // value={info?.product_id || ""}
-              // onChange={handleChange}
+              value={info?.status || ""}
+              onChange={handleChange}
               required
             >
-              <MenuItem onClick={() => navigate("/stock/products")}>
-                Status
+              <MenuItem key={"d"} value={"d"}>
+                Draft
+              </MenuItem>
+              <MenuItem key={"p"} value={"p"}>
+               Pulished
               </MenuItem>
               {/* <hr />
                 {products?.map((item) => {
@@ -83,6 +115,9 @@ const NewBlog = () => {
               label="Content"
               placeholder="Content"
               multiline
+              name="content"
+              value={info?.content || ""}
+              onChange={handleChange}
             />
             <Button type="submit" variant="contained" size="large">
               Add New Blog

@@ -13,7 +13,7 @@ import {
 const useAuthCall = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {Token} =useSelector((state)=>state.auth)
+  const {token} =useSelector((state)=>state.auth)
 
   const login = async (userData) => {
     dispatch(fetchStart());
@@ -42,10 +42,10 @@ const useAuthCall = () => {
     try {
       await axios.post(
         `${BASE_URL}/users/auth/logout/`,
-        {},
+        
         {
           headers: {
-            Authorization: `Token ${Token}`,
+            Authorization: `Token ${token}`,
           },
         }
       );
@@ -60,15 +60,16 @@ const useAuthCall = () => {
   };
 
   const register = async (userData) => {
+    console.log(userData)
     dispatch(fetchStart());
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_BASE_URL}/account/register/`,
+        `http://32272.fullstack.clarusway.com/users/register/`,
         userData
       );
       dispatch(registerSuccess(data));
       toastSuccessNotify("Register successfull");
-      navigate("/stock");
+      navigate("/");
     } catch (error) {
       console.log(error);
       dispatch(fetchFail());

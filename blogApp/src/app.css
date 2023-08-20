@@ -7,6 +7,7 @@
 
 .footer{
     position: fixed;
+    height: 2rem;
     width: 100%;
     background-color: rgb(150, 168, 240);
     bottom: 0;

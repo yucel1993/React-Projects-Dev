@@ -85,6 +85,29 @@ const RegisterForm = ({
             error={touched.email && Boolean(errors.email)}
             helperText={errors.email}
           />
+               <TextField
+              label="Image"
+              name="image"
+              id="image"
+              type="url"
+              variant="outlined"
+             
+              required
+              value={values.image}
+            onChange={handleChange}
+            />
+             <TextField
+            label="Bio"
+            name="bio"
+            id="bio"
+            type="text"
+            variant="outlined"
+            value={values.bio}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            error={touched.bio && Boolean(errors.bio)}
+            helperText={errors.bio}
+          />
           <TextField
             label="password"
             name="password"

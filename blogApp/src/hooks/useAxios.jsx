@@ -7,7 +7,7 @@ const useAxios = () => {
 
   const axiosHeaderLogin = axios.create({
     baseURL: `${import.meta.env.VITE_BASE_URL}`,
-    headers: { Cookie: "csrftoken=jmldpDHRYXhGENvzJoQTcnkPUv47Zdw5; sessionid=6o35hbr9fbkzor1r5wak4tes3q1q5wsb" },
+    headers: { Authorization:`Token ${token}`  },
   })
 
   const axiosWithToken = axios.create({
@@ -19,7 +19,7 @@ const useAxios = () => {
     baseURL: `${import.meta.env.VITE_BASE_URL}`,
   })
 
-  return { axiosWithToken, axiosPublic }
+  return { axiosWithToken, axiosPublic,axiosHeaderLogin }
 }
 
 export default useAxios

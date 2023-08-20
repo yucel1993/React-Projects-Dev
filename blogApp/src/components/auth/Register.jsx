@@ -9,10 +9,11 @@ import { Link } from "react-router-dom"
 
 import { Formik } from "formik"
 import RegisterForm, { registerSchema } from "./RegisterForm"
-// import useAuthCall from "../hooks/useAuthCall"
+import useAuthCall from "../../hooks/useAuthCall"
+
 
 const Register = () => {
-  // const { register } = useAuthCall()
+  const { register } = useAuthCall()
 
   return (
     <Container maxWidth="lg">
@@ -58,11 +59,13 @@ const Register = () => {
               first_name: "",
               last_name: "",
               email: "",
+              image:"",
+              bio:"",
               password: "",
             }}
             validationSchema={registerSchema}
             onSubmit={(values, actions) => {
-              register({ ...values, password2: values.password })
+              register([{ ...values, password2: values.password }])
               actions.resetForm()
               actions.setSubmitting(false)
             }}

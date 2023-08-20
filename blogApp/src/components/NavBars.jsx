@@ -155,8 +155,7 @@ function NavBars() {
               onClose={handleCloseUserMenu}
             >
               {username ? (
-                <>
-                  {" "}
+               [
                   <Link
                     key="my-blogs"
                     to="/profile"
@@ -183,15 +182,16 @@ function NavBars() {
                     key="logout"
                     to="/"
                     style={{ textDecoration: "none", color: "inherit" }}
-                    onClick={handleCloseUserMenu}
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      logout();
+                    }}
                   >
                     <MenuItem>
-                      <Typography textAlign="center" onClick={() => logout()}>
-                        Logout
-                      </Typography>
+                      <Typography textAlign="center">Logout</Typography>
                     </MenuItem>
                   </Link>
-                </>
+                ]
               ) : (
                 <Link
                   to="/login"
