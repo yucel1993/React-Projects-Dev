@@ -1,32 +1,37 @@
-import React from "react";
-import Avatar from "@mui/material/Avatar";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import LockIcon from "@mui/icons-material/Lock";
-import image from "../assets/result.svg";
-import { Link, useNavigate } from "react-router-dom";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
-import { Form, Formik } from "formik";
-import { object, string } from "yup";
+import Avatar from "@mui/material/Avatar"
+import Container from "@mui/material/Container"
+import Grid from "@mui/material/Grid"
+import Typography from "@mui/material/Typography"
+import LockIcon from "@mui/icons-material/Lock"
+// import image from "../assets/result.svg"
+import { Link } from "react-router-dom"
+import Box from "@mui/material/Box"
+import TextField from "@mui/material/TextField"
+import Button from "@mui/material/Button"
+import { Formik, Form } from "formik"
+import { object, string } from "yup"
+import useAuthCall from "../../hooks/useAuthCall"
 
-import useAuthCall from "../hooks/useAuthCall";
+
 
 const Login = () => {
-  const navigate = useNavigate();
-  const {login} =useAuthCall()
+  const { login } = useAuthCall()
+  
 
-  let loginSchema = object({
-    email: string().email("hahahahha").required(),
+  //? harici validasyon şemasi
+  const loginSchema = object({
+    email: string()
+      .email("Lutfen valid bir email giriniz")
+      .required("Bu alan zorunludur"),
     password: string()
-      .required()
-      .min(8, "at least 8 caracters")
-      .max(16, "not more than 16 characters")
-      .matches(/\d+/, "At least 1 number")
-      .matches(/[!,?{}><%&$#+-.}]+/, "At least one special characters"),
-  });
+      .required("Bu alan zorunludur")
+      .min(8, "En az 8 karakter girilmelidir")
+      .max(16, "En fazla 16 karakter girilmelidir")
+      .matches(/\d+/, "En az bir rakam içermelidir.")
+      .matches(/[a-z]/, "En az bir küçük harf içermelidir.")
+      .matches(/[A-Z]/, "En az bir büyük harf içermelidir.")
+      .matches(/[!,?{}><%&$#£+-.]+/, "En az bir özel karekter içermelidir."),
+  })
 
   return (
     <Container maxWidth="lg">
@@ -41,7 +46,7 @@ const Login = () => {
       >
         <Grid item xs={12} mb={3}>
           <Typography variant="h3" color="primary" align="center">
-            STOCK APP
+           BLOG APP
           </Typography>
         </Grid>
 
@@ -64,23 +69,20 @@ const Login = () => {
           >
             Login
           </Typography>
-            
-            
+
           <Formik
             initialValues={{ email: "", password: "" }}
             validationSchema={loginSchema}
-            onSubmit={(values, actions) => {
-              login(values);
-              actions.resetForm();
-              actions.setSubmitting(false);
+            onSubmit={(values, action) => {
+             
+              login(values)
+              action.resetForm()
+              action.setSubmitting(false)
             }}
           >
             {({ handleChange, handleBlur, values, touched, errors }) => (
               <Form>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                <Typography>
-              email:kedi1@gmil.com
-            </Typography>
                   <TextField
                     label="Email"
                     name="email"
@@ -93,11 +95,8 @@ const Login = () => {
                     error={touched.email && Boolean(errors.email)}
                     helperText={errors.email}
                   />
-                  <Typography>
-              password:Clarusway1.
-            </Typography>
                   <TextField
-                    label="Password"
+                    label="password"
                     name="password"
                     id="password"
                     type="password"
@@ -117,18 +116,18 @@ const Login = () => {
           </Formik>
 
           <Box sx={{ textAlign: "center", mt: 2 }}>
-            <Link to="/register">Don't have an account?</Link>
+            <Link to="/register">Don't you have an account?</Link>
           </Box>
         </Grid>
 
         <Grid item xs={10} sm={7} md={6}>
           <Container>
-            <img src={image} alt="img" />
+          <img src={"https://icons.iconarchive.com/icons/aha-soft/3d-social/256/Blog-icon.png"} width={"50%"} alt="as" />
           </Container>
         </Grid>
       </Grid>
     </Container>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
