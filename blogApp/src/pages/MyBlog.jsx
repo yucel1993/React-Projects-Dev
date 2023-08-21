@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 import { useEffect } from "react";
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, Typography } from "@mui/material";
 import BlogCard from "../components/blog/BlogCard";
 import useBlogCall from "../hooks/useBlogCall";
 
@@ -21,11 +21,14 @@ const MyBlog = () => {
     return <div>Error occurred while fetching data.</div>;
   }
 
-  const data=draft.data
-  console.log(data)
+  const data = draft.data;
+  console.log(data);
 
   return (
     <div xs={{ marginTop: "3rem" }}>
+      <Typography variant="h2" color={"secondary"} sx={{ mb: 2 }}>
+        MY BLOGS
+      </Typography>
       <Box
         display="flex"
         justifyContent="center"

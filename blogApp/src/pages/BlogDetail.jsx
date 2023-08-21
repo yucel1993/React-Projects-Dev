@@ -1,19 +1,27 @@
-import { Box, Button, TextField } from "@mui/material";
-import { useState } from "react";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom"; // Import useParams from react-router-dom
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Button,
+  TextField,
+  Modal,
+  Paper,
+  Typography,
+} from "@mui/material";
+import {
+  AccountCircle as AccountCircleIcon,
+  Favorite as FavoriteIcon,
+  ChatBubbleOutline as ChatBubbleOutlineIcon,
+  Visibility as VisibilityIcon,
+} from "@mui/icons-material";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import useBlogCall from "../hooks/useBlogCall";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const BlogDetail = ({ setInfo: setUpperInfo }) => {
-  const [isLiked, setIsLiked] = useState(false); 
+  const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [addComment, setAddComment] = useState("");
   const { getComments, createComment, deleteBlog } = useBlogCall();
@@ -21,8 +29,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
   const { comment } = useSelector((state) => state.blog);
   const [toggle, setToggle] = useState(false);
   const [info, setInfo] = useState([]);
-  const { id } = useParams(); //? Get the ID from the URL
-  // Fetch the blog post's details using the ID and display them
+  const { id } = useParams();
   const comments = comment.data;
 
   const handleLike = () => {
@@ -33,6 +40,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
     }
     setIsLiked(!isLiked);
   };
+
   const getBlog = async (id) => {
     try {
       const { data } = await axios(
@@ -43,19 +51,18 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
           },
         }
       );
-      console.log(data);
       setInfo(data);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getBlog(id);
     getComments(id);
   }, []);
 
   const {
-    id: idNew,
     image,
     title,
     content,
@@ -65,6 +72,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
     comment_count,
     post_views,
   } = info;
+
   const formattedDate = new Date(publish_date).toLocaleString("en-US", {
     day: "numeric",
     month: "numeric",
@@ -73,10 +81,18 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
     minute: "numeric",
     second: "numeric",
   });
+
   const handleSubmit = (id) => {
     createComment(id, addComment);
     setAddComment("");
   };
+
+  const handleDelete = () => {
+    deleteBlog(id);
+    navigate(-1);
+    setShowModal(false);
+  };
+
   return (
     <div style={{ marginTop: "2rem", marginBottom: "2rem" }}>
       <Box sx={{ width: "50vh", margin: "auto" }}>
@@ -98,9 +114,12 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <FavoriteIcon  
-            style={{ cursor: "pointer", color: isLiked ? "red" : "inherit" }}
-            onClick={handleLike}
+            <FavoriteIcon
+              style={{
+                cursor: "pointer",
+                color: isLiked ? "red" : "inherit",
+              }}
+              onClick={handleLike}
             />
             <p>{likeCount}</p>
             <ChatBubbleOutlineIcon
@@ -127,18 +146,35 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
           <Button
             variant="contained"
             color="error"
-            onClick={() => {
-              deleteBlog(id);
-              navigate(-1);
-            }}
+            onClick={() => setShowModal(true)}
           >
             Delete Blog
           </Button>
         </Box>
 
+        {/* Modal Confirmation Dialog */}
+        <Modal open={showModal} onClose={() => setShowModal(false)}>
+          <Paper sx={{ p: 2, width: 300, margin: "auto", textAlign: "center" }}>
+            <Typography variant="h6" sx={{ mb: 2 }}>
+              Are you sure you want to delete this blog?
+            </Typography>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ marginRight: 1 }}
+              onClick={() => setShowModal(false)}
+            >
+              Cancel
+            </Button>
+            <Button variant="contained" color="error" onClick={handleDelete}>
+              Delete
+            </Button>
+          </Paper>
+        </Modal>
+
         {toggle &&
           comments.map((item, i) => (
-            <>
+            <React.Fragment key={i}>
               <h3>{item?.user}</h3>
               <h3>
                 {new Date(item?.time_stamp).toLocaleString("en-US", {
@@ -153,7 +189,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
               <h4 style={{ borderBottom: "2px solid black" }}>
                 {item?.content}
               </h4>
-            </>
+            </React.Fragment>
           ))}
 
         {toggle && (
