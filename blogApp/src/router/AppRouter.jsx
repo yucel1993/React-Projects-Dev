@@ -10,6 +10,7 @@ import Login from "../components/auth/Login";
 import PrivateRouter from "./PrivateRouter";
 import BlogDetail from "../pages/BlogDetail";
 import Register from "../components/auth/Register";
+import MyBlog from "../pages/MyBlog";
 
 
 
@@ -25,6 +26,7 @@ const AppRouter = () => {
         <Route path="" element={<PrivateRouter />}>
           <Route path="/newblog" element={<NewBlog />} />
           <Route path="/detail/:id" element={<BlogDetail />} />
+          <Route path="/myblog" element={<MyBlog />} />
         </Route>
 
         <Route path="/about" element={<About />} />

@@ -85,11 +85,11 @@ const BlogDetail = () => {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <FavoriteIcon />
+            <FavoriteIcon style={{cursor:"pointer"}} />
             <p>{likes}</p>
-            <ChatBubbleOutlineIcon onClick={() => setToggle(!toggle)} />
+            <ChatBubbleOutlineIcon style={{cursor:"pointer"}} onClick={() => setToggle(!toggle)} />
             <p>{comment_count}</p>
-            <VisibilityIcon />
+            <VisibilityIcon style={{cursor:"pointer"}} />
             <p>{post_views}</p>
           </Box>
           <div></div>
@@ -116,23 +116,30 @@ const BlogDetail = () => {
                   second: "numeric",
                 })}
               </h3>
-              <h4 style={{borderBottom:"2px solid black"}}>{item?.content}</h4>
+              <h4 style={{ borderBottom: "2px solid black" }}>
+                {item?.content}
+              </h4>
             </>
           ))}
-        <TextField
-          fullWidth
-          label="fullWidth"
-          id="fullWidth"
-          onChange={(e) => setAddComment(e.target.value)}
-        />
-        <br />
-        <Button
-          sx={{ marginTop: "1rem" }}
-          variant="contained"
-          onClick={() => handleSubmit(id)}
-        >
-          Add Comment
-        </Button>
+
+        {toggle && (
+          <Box mt={2}>
+            <TextField
+              fullWidth
+              label="Add comment"
+              id="fullWidth"
+              onChange={(e) => setAddComment(e.target.value)}
+            />
+            <br />
+            <Button
+              sx={{ marginTop: "1rem" }}
+              variant="contained"
+              onClick={() => handleSubmit(id)}
+            >
+              Add Comment
+            </Button>
+          </Box>
+        )}
       </Box>
     </div>
   );

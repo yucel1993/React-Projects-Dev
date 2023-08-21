@@ -158,7 +158,7 @@ function NavBars() {
                [
                   <Link
                     key="my-blogs"
-                    to="/profile"
+                    to="/myblog"
                     style={{ textDecoration: "none", color: "inherit" }}
                     onClick={handleCloseUserMenu}
                   >

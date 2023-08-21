@@ -111,6 +111,7 @@ const useBlogCall = () => {
       );
 
       getComments(id);
+      getBlogData()
       toastSuccessNotify("Performed well");
     } catch (error) {
       toastErrorNotify("Operation Failed");
