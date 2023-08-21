@@ -44,7 +44,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
   const getBlog = async (id) => {
     try {
       const { data } = await axios(
-        `${import.meta.env.VITE_BASE_URL}/api/blogs/${id}/`,
+        `https://32272.fullstack.clarusway.com/api/blogs/${id}/`,
         {
           headers: {
             Authorization: `Token ${token}`,
