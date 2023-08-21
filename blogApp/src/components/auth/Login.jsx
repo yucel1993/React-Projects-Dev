@@ -82,8 +82,17 @@ const Login = () => {
           >
             {({ handleChange, handleBlur, values, touched, errors }) => (
               <Form>
+                <Typography
+            variant="p"
+           
+            ml={2}
+            color="secondary.light"
+          >
+            Email:yaq@gmail.com
+          </Typography>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                   <TextField
+                  
                     label="Email"
                     name="email"
                     id="email"
@@ -95,6 +104,14 @@ const Login = () => {
                     error={touched.email && Boolean(errors.email)}
                     helperText={errors.email}
                   />
+                  <Typography
+            variant="p"
+            
+            
+            color="secondary.light"
+          >
+            password:Jasondata1.
+          </Typography>
                   <TextField
                     label="password"
                     name="password"
