@@ -69,6 +69,7 @@ const useBlogCall = () => {
     } catch (error) {
       toastErrorNotify("Operation Failed");
       dispatch(fetchFail());
+      console.log(info);
       console.log(error);
     }
   };

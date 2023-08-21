@@ -28,7 +28,15 @@ const NewBlog = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    createBlog({info})
+    createBlog(info)
+    setInfo({
+      title: "",
+      content: "",
+      image: "",
+      category: "",
+      status: "",
+      
+    })
 
   };
   return (
