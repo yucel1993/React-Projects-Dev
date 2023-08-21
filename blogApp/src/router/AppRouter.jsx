@@ -11,11 +11,20 @@ import PrivateRouter from "./PrivateRouter";
 import BlogDetail from "../pages/BlogDetail";
 import Register from "../components/auth/Register";
 import MyBlog from "../pages/MyBlog";
+import { useState } from "react";
 
 
 
 
 const AppRouter = () => {
+  const [info, setInfo] = useState({
+    title: "",
+    content: "",
+    image: "",
+    category: "",
+    status: "",
+    
+  });
   return (
     <div>
       <NavBars />
@@ -24,8 +33,8 @@ const AppRouter = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="" element={<PrivateRouter />}>
-          <Route path="/newblog" element={<NewBlog />} />
-          <Route path="/detail/:id" element={<BlogDetail />} />
+          <Route path="/newblog" element={<NewBlog info={info} setInfo={setInfo} />} />
+          <Route path="/detail/:id" element={<BlogDetail setInfo={setInfo}  />} />
           <Route path="/myblog" element={<MyBlog />} />
         </Route>
 

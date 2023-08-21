@@ -5,7 +5,7 @@ import useBlogCall from "../hooks/useBlogCall";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const NewBlog = () => {
+const NewBlog = ({info,setInfo}) => {
   const navigate=useNavigate()
   const { categories } = useSelector((state) => state.blog);
   const {createBlog,getBlogCategories}=useBlogCall()
@@ -16,14 +16,7 @@ const NewBlog = () => {
   
   const data = categories?.data;
   console.log(data);
-  const [info, setInfo] = useState({
-    title: "",
-    content: "",
-    image: "",
-    category: "",
-    status: "",
-    
-  });
+  
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
     console.log(info)

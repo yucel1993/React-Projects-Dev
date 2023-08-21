@@ -4,6 +4,7 @@ import {
   getBlogsSuccess,
   getCategoriesSuccess,
   getCommentSlice,
+  getUserSlice,
 } from "../features/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
@@ -11,7 +12,7 @@ import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import axios from "axios";
 
 const useBlogCall = () => {
-  const { token } = useSelector((state) => state.auth);
+  const { token,id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   // const { axiosWithToken } = useAxios()
 
@@ -72,6 +73,28 @@ const useBlogCall = () => {
       console.log(error);
     }
   };
+
+  const getUserBlogs = async () => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axios(
+       ` http://32272.fullstack.clarusway.com/api/blogs/?author=${id}`,
+       {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      }
+      );
+     
+      console.log(data);
+      dispatch(getUserSlice( {data} ));
+    } catch (error) {
+      dispatch(fetchFail());
+      console.log(error);
+    }
+  };
+
+
 
   const deleteBlog = async (id) => {
     console.log(id);
@@ -187,6 +210,7 @@ const useBlogCall = () => {
     getComments,
     createComment,
     deleteBlog,
+    getUserBlogs,
   };
 };
 

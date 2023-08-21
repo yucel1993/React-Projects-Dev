@@ -6,11 +6,11 @@ import BlogCard from "../components/blog/BlogCard";
 import useBlogCall from "../hooks/useBlogCall";
 
 const MyBlog = () => {
-  const { getBlogData } = useBlogCall();
-  const { blogs, loading, error } = useSelector((state) => state.blog);
+  const { getUserBlogs } = useBlogCall();
+  const { draft, loading, error } = useSelector((state) => state.blog);
 
   useEffect(() => {
-    getBlogData();
+    getUserBlogs();
   }, []);
 
   if (loading) {
@@ -21,7 +21,8 @@ const MyBlog = () => {
     return <div>Error occurred while fetching data.</div>;
   }
 
-  const data = blogs?.data;
+  const data=draft.data
+  console.log(data)
 
   return (
     <div xs={{ marginTop: "3rem" }}>

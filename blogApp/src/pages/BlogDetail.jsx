@@ -11,10 +11,10 @@ import { useSelector } from "react-redux";
 import useBlogCall from "../hooks/useBlogCall";
 import { useNavigate } from "react-router-dom";
 
-const BlogDetail = () => {
-  const navigate=useNavigate()
+const BlogDetail = ({ setInfo: setUpperInfo }) => {
+  const navigate = useNavigate();
   const [addComment, setAddComment] = useState("");
-  const { getComments, createComment,deleteBlog } = useBlogCall();
+  const { getComments, createComment, deleteBlog } = useBlogCall();
   const { token } = useSelector((state) => state.auth);
   const { comment } = useSelector((state) => state.blog);
   const [toggle, setToggle] = useState(false);
@@ -87,21 +87,37 @@ const BlogDetail = () => {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <FavoriteIcon style={{cursor:"pointer"}} />
+            <FavoriteIcon style={{ cursor: "pointer" }} />
             <p>{likes}</p>
-            <ChatBubbleOutlineIcon style={{cursor:"pointer"}} onClick={() => setToggle(!toggle)} />
+            <ChatBubbleOutlineIcon
+              style={{ cursor: "pointer" }}
+              onClick={() => setToggle(!toggle)}
+            />
             <p>{comment_count}</p>
-            <VisibilityIcon style={{cursor:"pointer"}} />
+            <VisibilityIcon style={{ cursor: "pointer" }} />
             <p>{post_views}</p>
           </Box>
           <div></div>
         </Box>
 
         <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <Button variant="contained">Update Blog</Button>
-          <Button variant="contained" color="error" onClick={()=>{deleteBlog(id)
-          navigate("/")
-          }} >
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate("/newblog");
+              setUpperInfo(id);
+            }}
+          >
+            Update Blog
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => {
+              deleteBlog(id);
+              navigate(-1);
+            }}
+          >
             Delete Blog
           </Button>
         </Box>

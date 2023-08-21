@@ -11,6 +11,7 @@ const authSlice = createSlice({
     bio:false,
    email:false,
     token: null,
+    id:null
   },
   reducers: {
     fetchStart: (state) => {
@@ -25,6 +26,7 @@ const authSlice = createSlice({
       state.token = action.payload?.key;
       state.image = action.payload?.user?.image;
       state.bio = action.payload?.user?.bio;
+      state.id = action.payload?.user?.id;
     },
     logoutSuccess: (state) => {
       state.loading = false;
