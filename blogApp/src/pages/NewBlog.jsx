@@ -3,8 +3,10 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogCall from "../hooks/useBlogCall";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const NewBlog = () => {
+  const navigate=useNavigate()
   const { categories } = useSelector((state) => state.blog);
   const {createBlog,getBlogCategories}=useBlogCall()
 
@@ -29,6 +31,8 @@ const NewBlog = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     createBlog(info)
+    console.log(info)
+    navigate("/")
     setInfo({
       title: "",
       content: "",

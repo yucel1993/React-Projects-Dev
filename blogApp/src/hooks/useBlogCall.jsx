@@ -3,7 +3,6 @@ import {
   fetchStart,
   getBlogsSuccess,
   getCategoriesSuccess,
- 
   getCommentSlice,
 } from "../features/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -64,7 +63,7 @@ const useBlogCall = () => {
         }
       );
 
-      getBlogCategories()
+      getBlogCategories();
       toastSuccessNotify("Performed well");
     } catch (error) {
       toastErrorNotify("Operation Failed");
@@ -73,6 +72,31 @@ const useBlogCall = () => {
       console.log(error);
     }
   };
+
+  const deleteBlog = async (id) => {
+    console.log(id);
+    dispatch(fetchStart());
+    try {
+      await axios.delete(
+        `http://32272.fullstack.clarusway.com/api/blogs/${id}/`,
+        
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+      getBlogData()
+      toastSuccessNotify("Performed well");
+    } catch (error) {
+      toastErrorNotify("Operation Failed");
+      dispatch(fetchFail());
+      console.log(id);
+      console.log(error);
+    }
+  };
+
 
   const getComments = async (id) => {
     dispatch(fetchStart());
@@ -87,20 +111,17 @@ const useBlogCall = () => {
       );
 
       dispatch(getCommentSlice({ data }));
-      
     } catch (error) {
-      
       dispatch(fetchFail());
       console.log(error);
     }
   };
 
-  const createComment = async (id,info) => {
-    const createdComment={ post:id,
-    content: info}
+  const createComment = async (id, info) => {
+    const createdComment = { post: id, content: info };
     dispatch(fetchStart());
     try {
-       await axios.post(
+      await axios.post(
         `http://32272.fullstack.clarusway.com/api/comments/${id}/`,
         createdComment,
         {
@@ -111,7 +132,7 @@ const useBlogCall = () => {
       );
 
       getComments(id);
-      getBlogData()
+      getBlogData();
       toastSuccessNotify("Performed well");
     } catch (error) {
       toastErrorNotify("Operation Failed");
@@ -120,9 +141,6 @@ const useBlogCall = () => {
     }
   };
 
-
-
-  
   // const deleteStockData = async (url, id) => {
   //   dispatch(fetchStart())
   //   try {
@@ -168,6 +186,7 @@ const useBlogCall = () => {
     getBlogCategories,
     getComments,
     createComment,
+    deleteBlog,
   };
 };
 

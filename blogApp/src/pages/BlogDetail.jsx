@@ -9,15 +9,17 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import useBlogCall from "../hooks/useBlogCall";
+import { useNavigate } from "react-router-dom";
 
 const BlogDetail = () => {
+  const navigate=useNavigate()
   const [addComment, setAddComment] = useState("");
-  const { getComments, createComment } = useBlogCall();
+  const { getComments, createComment,deleteBlog } = useBlogCall();
   const { token } = useSelector((state) => state.auth);
   const { comment } = useSelector((state) => state.blog);
   const [toggle, setToggle] = useState(false);
   const [info, setInfo] = useState([]);
-  const { id } = useParams(); // Get the ID from the URL
+  const { id } = useParams(); //? Get the ID from the URL
   // Fetch the blog post's details using the ID and display them
   const comments = comment.data;
   const getBlog = async (id) => {
@@ -40,7 +42,7 @@ const BlogDetail = () => {
     getBlog(id);
     getComments(id);
   }, []);
-  console.log(comment);
+
   const {
     id: idNew,
     image,
@@ -97,7 +99,9 @@ const BlogDetail = () => {
 
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <Button variant="contained">Update Blog</Button>
-          <Button variant="contained" color="error">
+          <Button variant="contained" color="error" onClick={()=>{deleteBlog(id)
+          navigate("/")
+          }} >
             Delete Blog
           </Button>
         </Box>
