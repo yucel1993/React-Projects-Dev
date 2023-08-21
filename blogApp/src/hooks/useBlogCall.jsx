@@ -3,8 +3,8 @@ import {
   fetchStart,
   getBlogsSuccess,
   getCategoriesSuccess,
-  createMyBlog,
  
+  getCommentSlice,
 } from "../features/blogSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
@@ -54,7 +54,7 @@ const useBlogCall = () => {
     console.log(info);
     dispatch(fetchStart());
     try {
-      const { data } = await axios.post(
+      await axios.post(
         "http://32272.fullstack.clarusway.com/api/blogs/",
         info,
         {
@@ -64,7 +64,52 @@ const useBlogCall = () => {
         }
       );
 
-      dispatch(createMyBlog({ data }));
+      getBlogCategories()
+      toastSuccessNotify("Performed well");
+    } catch (error) {
+      toastErrorNotify("Operation Failed");
+      dispatch(fetchFail());
+      console.log(error);
+    }
+  };
+
+  const getComments = async (id) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axios(
+        `http://32272.fullstack.clarusway.com/api/comments/${id}/`,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+      dispatch(getCommentSlice({ data }));
+      
+    } catch (error) {
+      
+      dispatch(fetchFail());
+      console.log(error);
+    }
+  };
+
+  const createComment = async (id,info) => {
+    const createdComment={ post:id,
+    content: info}
+    dispatch(fetchStart());
+    try {
+       await axios.post(
+        `http://32272.fullstack.clarusway.com/api/comments/${id}/`,
+        createdComment,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+      getComments(id);
       toastSuccessNotify("Performed well");
     } catch (error) {
       toastErrorNotify("Operation Failed");
@@ -74,8 +119,8 @@ const useBlogCall = () => {
   };
 
 
- 
 
+  
   // const deleteStockData = async (url, id) => {
   //   dispatch(fetchStart())
   //   try {
@@ -119,7 +164,8 @@ const useBlogCall = () => {
     createBlog,
     getBlogData,
     getBlogCategories,
-   
+    getComments,
+    createComment,
   };
 };
 

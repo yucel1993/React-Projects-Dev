@@ -20,7 +20,7 @@ const NewBlog = () => {
     image: "",
     category: "",
     status: "",
-    slug: "",
+    
   });
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
@@ -28,7 +28,7 @@ const NewBlog = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    createBlog({...info,slug:info.content})
+    createBlog({info})
 
   };
   return (
