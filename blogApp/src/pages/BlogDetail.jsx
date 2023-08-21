@@ -12,6 +12,8 @@ import useBlogCall from "../hooks/useBlogCall";
 import { useNavigate } from "react-router-dom";
 
 const BlogDetail = ({ setInfo: setUpperInfo }) => {
+  const [isLiked, setIsLiked] = useState(false); 
+  const [likeCount, setLikeCount] = useState(0);
   const navigate = useNavigate();
   const [addComment, setAddComment] = useState("");
   const { getComments, createComment, deleteBlog } = useBlogCall();
@@ -22,6 +24,15 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
   const { id } = useParams(); //? Get the ID from the URL
   // Fetch the blog post's details using the ID and display them
   const comments = comment.data;
+
+  const handleLike = () => {
+    if (isLiked) {
+      setLikeCount(likeCount - 1);
+    } else {
+      setLikeCount(likeCount + 1);
+    }
+    setIsLiked(!isLiked);
+  };
   const getBlog = async (id) => {
     try {
       const { data } = await axios(
@@ -87,8 +98,11 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <FavoriteIcon style={{ cursor: "pointer" }} />
-            <p>{likes}</p>
+            <FavoriteIcon  
+            style={{ cursor: "pointer", color: isLiked ? "red" : "inherit" }}
+            onClick={handleLike}
+            />
+            <p>{likeCount}</p>
             <ChatBubbleOutlineIcon
               style={{ cursor: "pointer" }}
               onClick={() => setToggle(!toggle)}
@@ -105,7 +119,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
             variant="contained"
             onClick={() => {
               navigate("/newblog");
-              setUpperInfo(id);
+              setUpperInfo(info);
             }}
           >
             Update Blog

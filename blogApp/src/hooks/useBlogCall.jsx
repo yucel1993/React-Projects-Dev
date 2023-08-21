@@ -119,6 +119,29 @@ const useBlogCall = () => {
       console.log(error);
     }
   };
+  const updateBlog = async (info) => {
+    console.log(id);
+    dispatch(fetchStart());
+    try {
+      await axios.put(
+        `http://32272.fullstack.clarusway.com/api/blogs/${info.id}/`,info,
+        
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+      getBlogData()
+      toastSuccessNotify("Updated well");
+    } catch (error) {
+      toastErrorNotify("Update Failed");
+      dispatch(fetchFail());
+      
+      console.log(error);
+    }
+  };
 
 
   const getComments = async (id) => {
@@ -211,6 +234,7 @@ const useBlogCall = () => {
     createComment,
     deleteBlog,
     getUserBlogs,
+    updateBlog,
   };
 };
 

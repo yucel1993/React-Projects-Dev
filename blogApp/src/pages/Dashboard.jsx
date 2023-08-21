@@ -4,14 +4,18 @@ import { useEffect } from "react";
 import { Grid } from "@mui/material";
 import BlogCard from "../components/blog/BlogCard"
 
-const Dashboard = () => {
+const Dashboard = ({setInfo}) => {
   const { getBlogData,getBlogCategories } = useBlogCall();
   const { blogs, loading, error } = useSelector((state) => state.blog);
 
   useEffect(() => {
     getBlogData();
     getBlogCategories()
-
+    setInfo({    title: "",
+    content: "",
+    image: "",
+    category: "",
+    status: "",})
   }, []);
 
   if (loading) {

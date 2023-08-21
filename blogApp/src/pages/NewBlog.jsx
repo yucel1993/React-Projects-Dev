@@ -8,10 +8,12 @@ import { useNavigate } from "react-router-dom";
 const NewBlog = ({info,setInfo}) => {
   const navigate=useNavigate()
   const { categories } = useSelector((state) => state.blog);
-  const {createBlog,getBlogCategories}=useBlogCall()
+  const {createBlog,getBlogCategories,updateBlog}=useBlogCall()
 
   useEffect(() => {
     getBlogCategories()
+
+    
   }, [])
   
   const data = categories?.data;
@@ -22,8 +24,9 @@ const NewBlog = ({info,setInfo}) => {
     console.log(info)
   };
   const handleSubmit = (e) => {
+    console.log(info)
     e.preventDefault();
-    createBlog(info)
+    info?.id ? updateBlog(info) : createBlog(info);
     console.log(info)
     navigate("/")
     setInfo({
