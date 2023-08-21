@@ -20,7 +20,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios.get(
-        "http://32272.fullstack.clarusway.com/api/blogs/"
+        "https://32272.fullstack.clarusway.com/api/blogs/"
       );
 
       console.log(data);
@@ -36,7 +36,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios.get(
-        "http://32272.fullstack.clarusway.com/api/categories/",
+        "https://32272.fullstack.clarusway.com/api/categories/",
         {
           Authorization: `Token ${token}`,
         }
@@ -55,7 +55,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       await axios.post(
-        "http://32272.fullstack.clarusway.com/api/blogs/",
+        "https://32272.fullstack.clarusway.com/api/blogs/",
         info,
         {
           headers: {
@@ -78,7 +78,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios(
-       ` http://32272.fullstack.clarusway.com/api/blogs/?author=${id}`,
+       ` https://32272.fullstack.clarusway.com/api/blogs/?author=${id}`,
        {
         headers: {
           Authorization: `Token ${token}`,
@@ -101,7 +101,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       await axios.delete(
-        `http://32272.fullstack.clarusway.com/api/blogs/${id}/`,
+        `https://32272.fullstack.clarusway.com/api/blogs/${id}/`,
         
         {
           headers: {
@@ -124,7 +124,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       await axios.put(
-        `http://32272.fullstack.clarusway.com/api/blogs/${info.id}/`,info,
+        `https://32272.fullstack.clarusway.com/api/blogs/${info.id}/`,info,
         
         {
           headers: {
@@ -148,7 +148,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios(
-        `http://32272.fullstack.clarusway.com/api/comments/${id}/`,
+        `https://32272.fullstack.clarusway.com/api/comments/${id}/`,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -168,7 +168,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       await axios.post(
-        `http://32272.fullstack.clarusway.com/api/comments/${id}/`,
+        `https://32272.fullstack.clarusway.com/api/comments/${id}/`,
         createdComment,
         {
           headers: {
