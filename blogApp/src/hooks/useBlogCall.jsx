@@ -12,6 +12,7 @@ import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import axios from "axios";
 
 const useBlogCall = () => {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const { token,id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   // const { axiosWithToken } = useAxios()
@@ -20,7 +21,8 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios.get(
-        "https://32272.fullstack.clarusway.com/api/blogs/"
+        
+        `${BASE_URL}/api/blogs/`
       );
 
       console.log(data);
