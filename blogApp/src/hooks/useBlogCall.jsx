@@ -13,19 +13,15 @@ import axios from "axios";
 
 const useBlogCall = () => {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const { token,id } = useSelector((state) => state.auth);
+  const { token, id } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   // const { axiosWithToken } = useAxios()
 
   const getBlogData = async () => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios.get(
-        
-        `${BASE_URL}/api/blogs/`
-      );
+      const { data } = await axios.get(`${BASE_URL}/api/blogs/`);
 
-      console.log(data);
       dispatch(getBlogsSuccess({ data }));
     } catch (error) {
       dispatch(fetchFail());
@@ -37,14 +33,8 @@ const useBlogCall = () => {
   const getBlogCategories = async () => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios.get(
-        "https://32272.fullstack.clarusway.com/api/categories/",
-        {
-          Authorization: `Token ${token}`,
-        }
-      );
+      const { data } = await axios.get(`${BASE_URL}/api/categories/`);
 
-      console.log(data);
       dispatch(getCategoriesSuccess({ data }));
     } catch (error) {
       dispatch(fetchFail());
@@ -57,7 +47,8 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       await axios.post(
-        "https://32272.fullstack.clarusway.com/api/blogs/",
+        
+        `${BASE_URL}/api/blogs/`,
         info,
         {
           headers: {
@@ -80,31 +71,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios(
-       ` https://32272.fullstack.clarusway.com/api/blogs/?author=${id}`,
-       {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      }
-      );
-     
-      console.log(data);
-      dispatch(getUserSlice( {data} ));
-    } catch (error) {
-      dispatch(fetchFail());
-      console.log(error);
-    }
-  };
-
-
-
-  const deleteBlog = async (id) => {
-    console.log(id);
-    dispatch(fetchStart());
-    try {
-      await axios.delete(
-        `https://32272.fullstack.clarusway.com/api/blogs/${id}/`,
-        
+        ` ${BASE_URL}/api/blogs/?author=${id}`,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -112,7 +79,29 @@ const useBlogCall = () => {
         }
       );
 
-      getBlogData()
+      console.log(data);
+      dispatch(getUserSlice({ data }));
+    } catch (error) {
+      dispatch(fetchFail());
+      console.log(error);
+    }
+  };
+
+  const deleteBlog = async (id) => {
+    console.log(id);
+    dispatch(fetchStart());
+    try {
+      await axios.delete(
+        `${BASE_URL}/api/blogs/${id}/`,
+
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        }
+      );
+
+      getBlogData();
       toastSuccessNotify("Performed well");
     } catch (error) {
       toastErrorNotify("Operation Failed");
@@ -126,8 +115,9 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       await axios.put(
-        `https://32272.fullstack.clarusway.com/api/blogs/${info.id}/`,info,
-        
+        `${BASE_URL}/api/blogs/${info.id}/`,
+        info,
+
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -135,22 +125,21 @@ const useBlogCall = () => {
         }
       );
 
-      getBlogData()
+      getBlogData();
       toastSuccessNotify("Updated well");
     } catch (error) {
       toastErrorNotify("Update Failed");
       dispatch(fetchFail());
-      
+
       console.log(error);
     }
   };
-
 
   const getComments = async (id) => {
     dispatch(fetchStart());
     try {
       const { data } = await axios(
-        `https://32272.fullstack.clarusway.com/api/comments/${id}/`,
+        `${BASE_URL}/api/comments/${id}/`,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -170,7 +159,7 @@ const useBlogCall = () => {
     dispatch(fetchStart());
     try {
       await axios.post(
-        `https://32272.fullstack.clarusway.com/api/comments/${id}/`,
+        `${BASE_URL}/api/comments/${id}/`,
         createdComment,
         {
           headers: {

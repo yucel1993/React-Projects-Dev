@@ -5,39 +5,35 @@ import useBlogCall from "../hooks/useBlogCall";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const NewBlog = ({info,setInfo}) => {
-  const navigate=useNavigate()
+const NewBlog = ({ info, setInfo }) => {
+  const navigate = useNavigate();
   const { categories } = useSelector((state) => state.blog);
-  const {createBlog,getBlogCategories,updateBlog}=useBlogCall()
+  const { createBlog, getBlogCategories, updateBlog } = useBlogCall();
 
   useEffect(() => {
-    getBlogCategories()
+    getBlogCategories();
+  }, []);
 
-    
-  }, [])
-  
   const data = categories?.data;
   console.log(data);
-  
+
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
-    console.log(info)
+    console.log(info);
   };
   const handleSubmit = (e) => {
-    console.log(info)
+    console.log(info);
     e.preventDefault();
     info?.id ? updateBlog(info) : createBlog(info);
-    console.log(info)
-    navigate("/")
+    console.log(info);
+    navigate("/");
     setInfo({
       title: "",
       content: "",
       image: "",
       category: "",
       status: "",
-      
-    })
-
+    });
   };
   return (
     <div style={{ marginTop: "2rem" }}>
@@ -112,7 +108,7 @@ const NewBlog = ({info,setInfo}) => {
                 Draft
               </MenuItem>
               <MenuItem key={"p"} value={"p"}>
-               Pulished
+                Pulished
               </MenuItem>
               {/* <hr />
                 {products?.map((item) => {
@@ -133,8 +129,7 @@ const NewBlog = ({info,setInfo}) => {
               onChange={handleChange}
             />
             <Button type="submit" variant="contained" size="large">
-              Add New Blog
-              {/* {info?.id ? "Update Purchase" : "Add New Purchase"} */}
+              {info?.id ? "Update Blog" : "Add New Blog"}
             </Button>
           </Box>
         </Paper>
