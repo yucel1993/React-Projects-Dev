@@ -1,5 +1,4 @@
-
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 
 const blogSlice = createSlice({
   name: "blog",
@@ -7,27 +6,25 @@ const blogSlice = createSlice({
   initialState: {
     loading: false,
     error: false,
-    myBlog:[],
-    blogs:[],
-    categories:[],
+    myBlog: [],
+    blogs: [],
+    categories: [],
+  
   },
   reducers: {
     fetchStart: (state) => {
-      state.loading = true
-      state.error = false
+      state.loading = true;
+      state.error = false;
     },
-
-
 
     // getStockSuccess: (state, { payload }) => {
     //   state.loading = false
     //   state[payload.url] = payload.data
     // },
 
-  
     getBlogsSuccess: (state, { payload }) => {
-      state.loading = false
-      state.blogs = payload
+      state.loading = false;
+      state.blogs = payload;
     },
     // getBrandsSuccess: (state, { payload }) => {
     //   state.loading = false
@@ -37,31 +34,32 @@ const blogSlice = createSlice({
     //   state.loading = false
     //   state.sales = payload
     // },
-    
-    getCategoriesSuccess:(state,{payload})=>{
-state.loading=false
-state.categories=payload
+
+    getCategoriesSuccess: (state, { payload }) => {
+      state.loading = false;
+      state.categories = payload;
     },
 
-    createMyBlog:(state,{payload})=>{
-        state.loading=false
-        state.myBlog=payload
-            },
+    createMyBlog: (state, { payload }) => {
+      state.loading = false;
+      state.myBlog = payload;
+    },
+
+  
 
     fetchFail: (state) => {
-      state.loading = false
-      state.error = true
+      state.loading = false;
+      state.error = true;
     },
   },
-})
-
+});
 
 export const {
   fetchStart,
   fetchFail,
   getBlogsSuccess,
   getCategoriesSuccess,
-  createMyBlog
+  createMyBlog,
  
-} = blogSlice.actions
-export default blogSlice.reducer
+} = blogSlice.actions;
+export default blogSlice.reducer;

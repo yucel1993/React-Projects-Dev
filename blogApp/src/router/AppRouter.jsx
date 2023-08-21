@@ -12,6 +12,8 @@ import BlogDetail from "../pages/BlogDetail";
 import Register from "../components/auth/Register";
 
 
+
+
 const AppRouter = () => {
   return (
     <div>

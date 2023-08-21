@@ -2,12 +2,17 @@ import { Box, Button, MenuItem, Paper, Select, TextField } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import useBlogCall from "../hooks/useBlogCall";
+import { useEffect } from "react";
 
 const NewBlog = () => {
   const { categories } = useSelector((state) => state.blog);
-  const {createBlog}=useBlogCall()
+  const {createBlog,getBlogCategories}=useBlogCall()
 
-  const data = categories.data;
+  useEffect(() => {
+    getBlogCategories()
+  }, [])
+  
+  const data = categories?.data;
   console.log(data);
   const [info, setInfo] = useState({
     title: "",

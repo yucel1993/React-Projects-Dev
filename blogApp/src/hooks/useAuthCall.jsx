@@ -14,10 +14,10 @@ const useAuthCall = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const {token} =useSelector((state)=>state.auth)
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const login = async (userData) => {
     dispatch(fetchStart());
-    const BASE_URL = import.meta.env.VITE_BASE_URL;
     try {
       const { data } = await axios.post(
         `${BASE_URL}/users/auth/login/`,
@@ -35,8 +35,8 @@ const useAuthCall = () => {
   };
 
   const logout = async () => {
-    const dispatch = useDispatch();
-    const BASE_URL = import.meta.env.VITE_BASE_URL;
+  
+    
   
     dispatch(fetchStart());
     try {
@@ -64,7 +64,7 @@ const useAuthCall = () => {
     dispatch(fetchStart());
     try {
       const { data } = await axios.post(
-        `http://32272.fullstack.clarusway.com/users/register/`,
+        `${BASE_URL}/users/register/`,
         userData
       );
       dispatch(registerSuccess(data));
