@@ -19,12 +19,11 @@ import useBlogCall from "../hooks/useBlogCall";
 import { useParams, useNavigate } from "react-router-dom";
 
 const BlogDetail = ({ setInfo: setUpperInfo }) => {
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
+ 
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [addComment, setAddComment] = useState("");
-  const { getComments, createComment, deleteBlog } = useBlogCall();
+  const { getComments, createComment, deleteBlog,getRemoveLike } = useBlogCall();
   const { token } = useSelector((state) => state.auth);
   const { comment } = useSelector((state) => state.blog);
   const [toggle, setToggle] = useState(false);
@@ -33,14 +32,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
   const comments = comment.data;
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  const handleLike = () => {
-    if (isLiked) {
-      setLikeCount(likeCount - 1);
-    } else {
-      setLikeCount(likeCount + 1);
-    }
-    setIsLiked(!isLiked);
-  };
+  
 
   const getBlog = async (id) => {
     try {
@@ -53,10 +45,14 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
         }
       );
       setInfo(data);
+      console.log(data.id)
     } catch (error) {
       console.log(error);
     }
   };
+
+ 
+
 
   useEffect(() => {
     getBlog(id);
@@ -64,6 +60,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
   }, []);
 
   const {
+    id:blogId,
     image,
     title,
     content,
@@ -118,11 +115,11 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
             <FavoriteIcon
               style={{
                 cursor: "pointer",
-                color: isLiked ? "red" : "inherit",
+                // color: isLiked ? "red" : "inherit",
               }}
-              onClick={handleLike}
+              onClick={()=>getRemoveLike(blogId)}
             />
-            <p>{likeCount}</p>
+            <p>{likes}</p>
             <ChatBubbleOutlineIcon
               style={{ cursor: "pointer" }}
               onClick={() => setToggle(!toggle)}

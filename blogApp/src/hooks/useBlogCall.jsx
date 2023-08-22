@@ -178,6 +178,30 @@ const useBlogCall = () => {
     }
   };
 
+
+  const getRemoveLike = async (id) => {
+    console.log("Type of id:", typeof id);
+
+    console.log(token);
+    dispatch(fetchStart());
+    try {
+       await axios.post(
+        `${BASE_URL}/api/likes/${id}/`,
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        },
+      );
+    getBlogData()
+    toastSuccessNotify("Performed well");
+    } catch (error) {
+      toastErrorNotify("Operation Failed");
+      dispatch(fetchFail());
+      console.log(error);
+    }
+  };
+
   // const deleteStockData = async (url, id) => {
   //   dispatch(fetchStart())
   //   try {
@@ -226,6 +250,7 @@ const useBlogCall = () => {
     deleteBlog,
     getUserBlogs,
     updateBlog,
+    getRemoveLike,
   };
 };
 
