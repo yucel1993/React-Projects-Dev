@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import useBlogCall from "../../hooks/useBlogCall";
 
 const BlogCard = ({
   id,
@@ -21,9 +22,9 @@ const BlogCard = ({
   post_views,
 }) => {
   const {token} =useSelector((state)=>state.auth)
+  const {getRemoveLike}=useBlogCall
   const navigate = useNavigate();
-  const [liked, setLiked] = useState(false);
-  const [likeCount, setLikeCount] = useState(likes);
+
   // Function to limit the number of words in the content
   const limitContent = (content, limit) => {
     const contentArray = content.split(" ");
@@ -41,35 +42,6 @@ const BlogCard = ({
     second: "numeric",
   });
 
-  const handleLikeClick = async () => {
-    console.log(likes,"likes that from component did upload")
-    console.log(likeCount,"likes that likes")
-    try {
-      if (liked) {
-        // Unlike the post
-        await axios.post(
-          `http://32272.fullstack.clarusway.com/api/likes/${id}/`
-        );
-        setLikeCount(likeCount - 1);
-        setLiked(false);
-      } else {
-        // Like the post
-        await axios.post(
-          `http://32272.fullstack.clarusway.com/api/likes/${id}/`,
-          {},
-          {
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          }
-        );
-        setLikeCount(likeCount + 1);
-        setLiked(true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <Grid>
       <Paper
@@ -105,10 +77,10 @@ const BlogCard = ({
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <FavoriteIcon
-              color={liked ? "secondary" : "inherit"}
-              onClick={handleLikeClick}
+              // color={liked ? "secondary" : "inherit"}
+              onClick={()=>getRemoveLike(id,)}
             />
-            <p>{likeCount}</p>
+            <p>{likes}</p>
             <ChatBubbleOutlineIcon />
             <p>{comment_count}</p>
             <VisibilityIcon />

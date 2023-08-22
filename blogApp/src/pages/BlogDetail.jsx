@@ -117,7 +117,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
                 cursor: "pointer",
                 // color: isLiked ? "red" : "inherit",
               }}
-              onClick={()=>getRemoveLike(blogId)}
+              onClick={()=>getRemoveLike(blogId,getBlog)}
             />
             <p>{likes}</p>
             <ChatBubbleOutlineIcon

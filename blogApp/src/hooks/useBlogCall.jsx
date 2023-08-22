@@ -179,7 +179,7 @@ const useBlogCall = () => {
   };
 
 
-  const getRemoveLike = async (id) => {
+  const getRemoveLike = async (id,getBlog) => {
     console.log("Type of id:", typeof id);
 
     console.log(token);
@@ -187,13 +187,14 @@ const useBlogCall = () => {
     try {
        await axios.post(
         `${BASE_URL}/api/likes/${id}/`,
+        {},
         {
           headers: {
             Authorization: `Token ${token}`,
           },
         },
       );
-    getBlogData()
+    getBlog(id)
     toastSuccessNotify("Performed well");
     } catch (error) {
       toastErrorNotify("Operation Failed");
@@ -202,44 +203,7 @@ const useBlogCall = () => {
     }
   };
 
-  // const deleteStockData = async (url, id) => {
-  //   dispatch(fetchStart())
-  //   try {
-  //     await axiosWithToken.delete(`/stock/${url}/${id}/`)
-  //     toastSuccessNotify(`${url} succesfuly deleted`)
-  //     getStockData(url)
-  //   } catch (error) {
-  //     dispatch(fetchFail())
-  //     toastErrorNotify(`${url} can not be deleted`)
-  //     console.log(error)
-  //   }
-  // }
-
-  // const postStockData = async (url, info) => {
-  //   dispatch(fetchStart())
-  //   try {
-  //     await axiosWithToken.post(`/stock/${url}/`, info)
-  //     toastSuccessNotify(`${url} succesfuly posted`)
-  //     getStockData(url)
-  //   } catch (error) {
-  //     dispatch(fetchFail())
-  //     toastErrorNotify(`${url} can not be posted`)
-  //     console.log(error)
-  //   }
-  // }
-
-  // const putStockData = async (url, info) => {
-  //   dispatch(fetchStart())
-  //   try {
-  //     await axiosWithToken.put(`/stock/${url}/${info.id}/`, info)
-  //     toastSuccessNotify(`${url} succesfuly updated`)
-  //     getStockData(url)
-  //   } catch (error) {
-  //     dispatch(fetchFail())
-  //     toastErrorNotify(`${url} can not be updated`)
-  //     console.log(error)
-  //   }
-  // }
+  
 
   return {
     createBlog,
