@@ -31,6 +31,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
   const [info, setInfo] = useState([]);
   const { id } = useParams();
   const comments = comment.data;
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const handleLike = () => {
     if (isLiked) {
@@ -44,7 +45,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
   const getBlog = async (id) => {
     try {
       const { data } = await axios(
-        `https://32272.fullstack.clarusway.com/api/blogs/${id}/`,
+        `${BASE_URL}/api/blogs/${id}/`,
         {
           headers: {
             Authorization: `Token ${token}`,
