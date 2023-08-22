@@ -70,7 +70,7 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
     comment_count,
     post_views,
   } = info;
-
+  const [prevLikes, setPrevLikes] = useState(likes);
   const formattedDate = new Date(publish_date).toLocaleString("en-US", {
     day: "numeric",
     month: "numeric",
@@ -113,11 +113,14 @@ const BlogDetail = ({ setInfo: setUpperInfo }) => {
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <FavoriteIcon
+            className={prevLikes < likes ? "increase-likes" : ""}
               style={{
                 cursor: "pointer",
-                // color: isLiked ? "red" : "inherit",
+               
               }}
-              onClick={()=>getRemoveLike(blogId,getBlog)}
+              onClick={()=>{
+                setPrevLikes(likes);
+                getRemoveLike(blogId,getBlog)}}
             />
             <p>{likes}</p>
             <ChatBubbleOutlineIcon
