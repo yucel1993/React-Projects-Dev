@@ -5,10 +5,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import axios from "axios";
-import { useSelector } from "react-redux";
+
+
 import useBlogCall from "../../hooks/useBlogCall";
+import { useState } from "react";
 
 const BlogCard = ({
   id,
@@ -21,11 +21,12 @@ const BlogCard = ({
   comment_count,
   post_views,
 }) => {
-  const {token} =useSelector((state)=>state.auth)
-  const {getRemoveLike}=useBlogCall
+ 
+  const {getRemoveLike}=useBlogCall()
   const navigate = useNavigate();
+  const [prevLikes, setPrevLikes] = useState(likes);
 
-  // Function to limit the number of words in the content
+  //? Function to limit the number of words in the content
   const limitContent = (content, limit) => {
     const contentArray = content.split(" ");
     const limitedContent = contentArray.slice(0, limit).join(" ");
@@ -76,10 +77,18 @@ const BlogCard = ({
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <FavoriteIcon
-              // color={liked ? "secondary" : "inherit"}
-              onClick={()=>getRemoveLike(id,)}
+
+          <FavoriteIcon
+            className={prevLikes < likes ? "increase-likes" : ""}
+              style={{
+                cursor: "pointer",
+               
+              }}
+              onClick={()=>{
+                setPrevLikes(likes);
+                getRemoveLike(id,true)}}
             />
+          
             <p>{likes}</p>
             <ChatBubbleOutlineIcon />
             <p>{comment_count}</p>

@@ -18,7 +18,7 @@ const useBlogCall = () => {
   // const { axiosWithToken } = useAxios()
 
   const getBlogData = async () => {
-    dispatch(fetchStart());
+    // dispatch(fetchStart());
     try {
       const { data } = await axios.get(`${BASE_URL}/api/blogs/`);
 
@@ -46,16 +46,11 @@ const useBlogCall = () => {
     console.log(info);
     dispatch(fetchStart());
     try {
-      await axios.post(
-        
-        `${BASE_URL}/api/blogs/`,
-        info,
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
+      await axios.post(`${BASE_URL}/api/blogs/`, info, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
 
       getBlogCategories();
       toastSuccessNotify("Performed well");
@@ -70,14 +65,11 @@ const useBlogCall = () => {
   const getUserBlogs = async () => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios(
-        ` ${BASE_URL}/api/blogs/?author=${id}`,
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
+      const { data } = await axios(` ${BASE_URL}/api/blogs/?author=${id}`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
 
       console.log(data);
       dispatch(getUserSlice({ data }));
@@ -138,14 +130,11 @@ const useBlogCall = () => {
   const getComments = async (id) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axios(
-        `${BASE_URL}/api/comments/${id}/`,
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
+      const { data } = await axios(`${BASE_URL}/api/comments/${id}/`, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
 
       dispatch(getCommentSlice({ data }));
     } catch (error) {
@@ -158,15 +147,11 @@ const useBlogCall = () => {
     const createdComment = { post: id, content: info };
     dispatch(fetchStart());
     try {
-      await axios.post(
-        `${BASE_URL}/api/comments/${id}/`,
-        createdComment,
-        {
-          headers: {
-            Authorization: `Token ${token}`,
-          },
-        }
-      );
+      await axios.post(`${BASE_URL}/api/comments/${id}/`, createdComment, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      });
 
       getComments(id);
       getBlogData();
@@ -178,12 +163,10 @@ const useBlogCall = () => {
     }
   };
 
-
   const getRemoveLike = async (id,getBlog) => {
     console.log("Type of id:", typeof id);
 
     console.log(token);
-    dispatch(fetchStart());
     try {
        await axios.post(
         `${BASE_URL}/api/likes/${id}/`,
@@ -194,16 +177,17 @@ const useBlogCall = () => {
           },
         },
       );
-    getBlog(id)
+    if(getBlog === true){
+      getBlogData()
+    }else {
+      getBlog(id)
+    }
     toastSuccessNotify("Performed well");
     } catch (error) {
       toastErrorNotify("Operation Failed");
-      dispatch(fetchFail());
       console.log(error);
     }
   };
-
-  
 
   return {
     createBlog,
