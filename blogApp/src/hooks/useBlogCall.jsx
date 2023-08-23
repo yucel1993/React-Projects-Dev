@@ -164,9 +164,7 @@ const useBlogCall = () => {
   };
 
   const getRemoveLike = async (id,getBlog) => {
-    console.log("Type of id:", typeof id);
-
-    console.log(token);
+   
     try {
        await axios.post(
         `${BASE_URL}/api/likes/${id}/`,
