@@ -31,7 +31,7 @@ const KpiCards = () => {
       bgColor: pink[200],
       color: pink[700],
       title: "profit",
-      value: `$${ totalSales - totalPurchases }`,
+      value: `$${ totalPurchases - totalSales  }`,
     },
     {
       id: 1,
