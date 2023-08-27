@@ -1,49 +1,70 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFail, fetchStart, getAllSuccess } from "../feature/stockSlice";
-import axios from "axios";
 
-import {toastSuccessNotify,toastErrorNotify} from "../helper/ToastNotify"
+import { toastSuccessNotify, toastErrorNotify } from "../helper/ToastNotify";
+import useAxios from "./useAxios";
 
 const useStockCall = () => {
-    const BASE_URL = import.meta.env.VITE_BASE_URL;
-    const dispatch = useDispatch();
-    const { token } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
-    const getAll = async (url) => {
-        dispatch(fetchStart());
-        try {
-            const { data } = await axios(`${BASE_URL}/stock/${url}/`, {
-                headers: {
-                    Authorization: `Token ${token}`
-                }
-            });
-            dispatch(getAllSuccess({url,data}));
-            toastSuccessNotify("Successfull ")
-        } catch (error) {
-            dispatch(fetchFail())
-            console.log(error)
-            toastErrorNotify("Delete Failed")
-        }
-    };
+  const { axiosWithToken } = useAxios();
 
+  const getAll = async (url) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosWithToken(`/stock/${url}/`);
+      dispatch(getAllSuccess({ url, data }));
+     
+    } catch (error) {
+      dispatch(fetchFail());
+      console.log(error);
+     
+    }
+  };
 
+  const deleteAll = async (url, id) => {
+    dispatch(fetchStart());
+    try {
+      await axiosWithToken.delete(`/stock/${url}/${id}/`);
+      toastSuccessNotify("Successfull ");
+      getAll(url);
+    } catch (error) {
+      dispatch(fetchFail());
+      console.log(error);
+      toastErrorNotify("Delete Failed");
+    }
+  };
+  
+  const postAll=async(url,data)=>{
+    dispatch(fetchStart());
+    try {
+      await axiosWithToken.post(`/stock/${url}/`,data);
+      
+      toastSuccessNotify("Successfull ");
+      getAll(url)
+    } catch (error) {
+      dispatch(fetchFail());
+      console.log(error);
+      toastErrorNotify(" Failed");
+     
+    }
+  };
+  const putAll=async(url,data)=>{
+    dispatch(fetchStart());
+    try {
+      await axiosWithToken.put(`/stock/${url}/${data.id}/`,data);
+      
+      toastSuccessNotify("Successfull ");
+      getAll(url)
+    } catch (error) {
+      dispatch(fetchFail());
+      console.log(error);
+      toastErrorNotify(" Failed");
+     
+    }
+  }
 
-    const deleteAll = async (url,id) => {
-        dispatch(fetchStart());
-        try {
-            await axios.delete(`${BASE_URL}/stock/${url}/`, {
-                headers: {
-                    Authorization: `Token ${token}`
-                }
-            });
-            getAll(url)
-        } catch (error) {
-            dispatch(fetchFail())
-            console.log(error)
-        }
-    };
-
-    return { getAll,deleteAll };
+  return { getAll, deleteAll,postAll,putAll };
 };
 
 export default useStockCall;

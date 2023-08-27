@@ -9,4 +9,10 @@ export const style = {
     boxShadow: 24,
     p: 4,
   };
+
+  export const btnStyle={
+    "&:hover" : {
+      color:"red",cursor:"pointer"
+    }
+  }
   
