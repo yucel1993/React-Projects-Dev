@@ -1,9 +1,131 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useSelector } from "react-redux";
+import { btnStyle } from "../GlobalStyles/styles";
+import useStockCall from "../hooks/useStockCall";
 
+export default function PurchaseCard({setInfo,handleOpen}) {
+  const {deleteAll} = useStockCall()
+  const { purchases } = useSelector((state) => state.stock);
+  console.log(purchases);
+  const columns = [
+    {
+      field: "id",
+      headerName: "#",
+      align: "center",
+      alignHeader: "center",
+      flex: 1,
+    },
+    {
+      field: "createds",
+      headerName: "Time",
+      align: "center",
+      alignHeader: "center",
+      flex: 1,
+    },
+    {
+      field: "firm",
+      headerName: "Firm",
+      align: "center",
+      alignHeader: "center",
+      flex: 1,
+    },
+    {
+      field: "brand",
+      headerName: "Brand",
+      align: "center",
+      alignHeader: "center",
+      flex: 1,
+    },
+    {
+      field: "product",
+      headerName: "Product",
+      align: "center",
+      alignHeader: "center",
+      flex: 1,
+    },
+    {
+      field: "quantity",
+      headerName: "Quantity",
+      type: "number",
+      align: "center",
+      alignHeader: "center",
+      flex: 1,
+    },
+    {
+      field: "price",
+      headerName: "Price",
+      type: "number",
+      align: "center",
+      alignHeader: "center",
+      flex: 1,
+    },
+    {
+      field: "price_total",
+      headerName: "Amount",
+      minWidth: 90,
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+      type: "number",
+    },
+    {
+      field: "editActions",
+      type: "actions",
+      headerName: "Edit",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      getActions: (props) => [
+        <GridActionsCellItem
+          icon={<EditIcon />}
+          label="Delete"
+          sx={btnStyle}
+          onClick={() => {
+            
+            setInfo(props.row)
+            handleOpen()
+          }}
+        />,
+      ],
+    },
+    {
+      field: "deleteactions",
+      type: "actions",
+      headerName: "Delete",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      getActions: (props) => [
+        <GridActionsCellItem
+          icon={<DeleteIcon />}
+          label="Delete"
+          sx={btnStyle}
+          onClick={() => deleteAll("purchases", props.id)}
+        />,
+      ],
+    },
 
-const PurchaseCard = () => {
+  ];
+
   return (
-    <div>PurchaseCard</div>
-  )
+    <Box sx={{ width: "100%" }}>
+      <DataGrid
+        rows={purchases}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
+        pageSizeOptions={[5]}
+        disableRowSelectionOnClick
+      />
+    </Box>
+  );
 }
-
-export default PurchaseCard

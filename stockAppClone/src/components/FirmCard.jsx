@@ -14,7 +14,7 @@ const FirmCard = ({ firm , handleOpen,setInfo }) => {
     const {deleteAll}=useStockCall()
   console.log(firm);
   return (
-    <Grid item mt={2} sx={{ objectFit: "contained" }}>
+    <Grid item mt={2} >
       <Card
         sx={{
           width: 300,

@@ -19,7 +19,7 @@ setInfo({...info,[e.target.name]:e.target.value})
   const handleSubmit = (e) => {
     e.preventDefault();
     info.id ? putAll("firms",info) : postAll("firms",info)
-    postAll("firms",info)
+    
     
     handleClose()
     // Handle form submission logic here
@@ -87,7 +87,7 @@ setInfo({...info,[e.target.name]:e.target.value})
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Submit
           </Button>
         </form>
       </Box>
