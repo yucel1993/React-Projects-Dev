@@ -81,6 +81,7 @@ const Login = () => {
             {({ handleChange, handleBlur, values, touched, errors }) => (
               <Form>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                  <p>Email: black@gmail.com </p>
                   <TextField
                     label="Email"
                     name="email"
@@ -93,6 +94,7 @@ const Login = () => {
                     error={touched.email && Boolean(errors.email)}
                     helperText={errors.email}
                   />
+                  <p>Password: BlackJohn1. </p>
                   <TextField
                     label="password"
                     name="password"

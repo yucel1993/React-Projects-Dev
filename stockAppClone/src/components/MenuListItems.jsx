@@ -9,6 +9,7 @@ import InventoryIcon from "@mui/icons-material/Inventory"
 import StoreIcon from "@mui/icons-material/Store"
 import StarsIcon from "@mui/icons-material/Stars"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
+import InfoIcon from '@mui/icons-material/Info';
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount"
 import { useNavigate } from "react-router-dom"
 
@@ -42,6 +43,11 @@ const icons = [
     title: "Products",
     icon: <InventoryIcon />,
     url: "/stock/products/",
+  },
+  {
+    title: "About",
+    icon: <InfoIcon />,
+    url: "/stock/about/",
   },
   {
     title: "Admin Panel",

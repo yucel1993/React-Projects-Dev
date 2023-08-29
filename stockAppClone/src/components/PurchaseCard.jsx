@@ -1,6 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useSelector } from "react-redux";
@@ -16,35 +16,35 @@ export default function PurchaseCard({setInfo,handleOpen}) {
       field: "id",
       headerName: "#",
       align: "center",
-      alignHeader: "center",
+      headerAlign: "center",
       flex: 1,
     },
     {
       field: "createds",
       headerName: "Time",
       align: "center",
-      alignHeader: "center",
+      headerAlign: "center",
       flex: 1,
     },
     {
       field: "firm",
       headerName: "Firm",
       align: "center",
-      alignHeader: "center",
+      headerAlign: "center",
       flex: 1,
     },
     {
       field: "brand",
       headerName: "Brand",
       align: "center",
-      alignHeader: "center",
+      headerAlign: "center",
       flex: 1,
     },
     {
       field: "product",
       headerName: "Product",
       align: "center",
-      alignHeader: "center",
+      headerAlign: "center",
       flex: 1,
     },
     {
@@ -52,7 +52,7 @@ export default function PurchaseCard({setInfo,handleOpen}) {
       headerName: "Quantity",
       type: "number",
       align: "center",
-      alignHeader: "center",
+      headerAlign: "center",
       flex: 1,
     },
     {
@@ -60,13 +60,13 @@ export default function PurchaseCard({setInfo,handleOpen}) {
       headerName: "Price",
       type: "number",
       align: "center",
-      alignHeader: "center",
+      headerAlign: "center",
       flex: 1,
     },
     {
       field: "price_total",
       headerName: "Amount",
-      minWidth: 90,
+    
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -112,7 +112,7 @@ export default function PurchaseCard({setInfo,handleOpen}) {
   ];
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%",marginTop:"2rem" }}>
       <DataGrid
         rows={purchases}
         columns={columns}
@@ -125,6 +125,7 @@ export default function PurchaseCard({setInfo,handleOpen}) {
         }}
         pageSizeOptions={[5]}
         disableRowSelectionOnClick
+        slots={{ toolbar: GridToolbar }}
       />
     </Box>
   );

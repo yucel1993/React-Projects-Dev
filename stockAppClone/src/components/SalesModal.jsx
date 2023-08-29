@@ -1,10 +1,9 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+
 import Modal from "@mui/material/Modal";
 import { style } from "../GlobalStyles/styles";
-import { useSelector } from "react-redux";
 import {
   FormControl,
   InputLabel,
@@ -12,12 +11,12 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { useSelector } from "react-redux";
 import useStockCall from "../hooks/useStockCall";
 
-export default function PurchaseModal({ info, setInfo, open, handleClose }) {
-  const { firms, brands, products } = useSelector((state) => state.stock);
-  const {postAll,putAll}=useStockCall()
-  
+export default function SalesModal({ info, setInfo, open, handleClose }) {
+    const {postAll,putAll} =useStockCall()
+  const { brands, products } = useSelector((state) => state.stock);
 
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
@@ -25,11 +24,9 @@ export default function PurchaseModal({ info, setInfo, open, handleClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const quantity = parseInt(info.quantity); //! Parse the quantity value to an integer
-    const updatedInfo = { ...info, quantity }; //! Create a new object with the updated quantity
-    
-    info.id ? putAll("purchases",updatedInfo) :  postAll("purchases", updatedInfo);
-    
+    const quantity =parseInt(info.quantity)
+    const updatedInfo={...info,quantity}
+    info.id ?  putAll("sales",updatedInfo) : postAll("sales",updatedInfo)
     handleClose()
   };
 
@@ -42,75 +39,67 @@ export default function PurchaseModal({ info, setInfo, open, handleClose }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form
-            onSubmit={handleSubmit}
-            style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
-          >
+          <form onSubmit={handleSubmit} >
             <FormControl fullWidth>
-              <InputLabel id="firm">Firm</InputLabel>
+              <InputLabel id="brand">Brand</InputLabel>
               <Select
-                labelId="firm"
-                id="demo-simple-select"
-                label="Firm"
-                name="firm_id"
-                value={info?.firm_id || ""}
+                labelId="brand"
+                id="brand"
+                label="brand"
+                name="brand_id"
+                value={info?.brand_id || ""}
                 onChange={handleChange}
               >
-                {firms.map((item, index) => (
+                {brands.map((item, index) => (
                   <MenuItem key={index} value={item.id}>
                     {item.name}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
-            <FormControl fullWidth>
-              <InputLabel id="brand">Brand</InputLabel>
-              <Select
-                labelId="brand"
-                id="demo-simple-select"
-                label="Brand"
-                name="brand_id"
-                value={info?.brand_id || ""}
-                onChange={handleChange}
-              >
-                {brands.map((item, index) => (
-                  <MenuItem value={item.id}>{item.name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl fullWidth>
+
+            <FormControl fullWidth sx={{marginTop:"1.2rem"}} >
               <InputLabel id="product">Product</InputLabel>
               <Select
+               fullWidth
+               
                 labelId="product"
-                id="demo-simple-select"
-                label="Brand"
+                id="product"
+                label="product"
                 name="product_id"
                 value={info?.product_id || ""}
                 onChange={handleChange}
               >
                 {products.map((item, index) => (
-                  <MenuItem value={item.id}>{item.name}</MenuItem>
+                  <MenuItem key={index} value={item.id}>
+                    {item.name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
 
             <TextField
-              id="outlined-number"
+              fullWidth
+              margin="normal"
               label="Quantity"
-              type="number"
+              variant="outlined"
               name="quantity"
-              value={info?.quantity || null}
+              type="number"
+              value={info?.quantity || ""}
               onChange={handleChange}
             />
             <TextField
-              id="outlined-number"
+              fullWidth
+              margin="normal"
               label="Price"
-              type="number"
+              variant="outlined"
               name="price"
-              value={info?.price || null}
+              type="number"
+              value={info?.price || ""}
               onChange={handleChange}
             />
-            <Button type="submit" variant="contained">
+
+            <Button type="submit" fullWidth variant="contained">
               Submit
             </Button>
           </form>
