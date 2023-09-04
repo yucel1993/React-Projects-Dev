@@ -1,16 +1,17 @@
 import { useState } from "react";
 import useData from "../hooks/useData";
 import { useSelector } from "react-redux";
+import Card from "./Card";
 
 const Demo = () => {
-  const {getAll} =useData()
-  const {data} =useSelector((state)=>state.data)
- const [url , setUrl ] = useState("")
-
+  const { getAll } = useData();
+  const { data } = useSelector((state) => state.data);
+  const [url, setUrl] = useState("");
+  console.log("Demo", data);
   const handleSubmit = async (e) => {
     e.preventDefault();
-     getAll(url)
-    alert("Success");
+    getAll(url);
+    
   };
   return (
     <section className="mt-16 w-full max-w-xl ">
@@ -25,8 +26,8 @@ const Demo = () => {
             className="absolute left-0 my-2 ml-3 w-5"
           />
           <input
-            type="url"
-            placeholder="Enter a Url"
+            type="text"
+            placeholder="Enter the query"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             required
@@ -36,8 +37,12 @@ const Demo = () => {
             ↵
           </button>
         </form>
-        <div>
-          {data ? <p> {data}</p> : ""}
+      </div>
+      <div className="w-full mt-10">
+        <div className="grid grid-cols-2 gap-10">
+          {data?.map((item, i) => (
+            <Card key={i} {...item} />
+          ))}
         </div>
       </div>
     </section>

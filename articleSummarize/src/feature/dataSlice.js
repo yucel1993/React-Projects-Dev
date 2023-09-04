@@ -6,7 +6,7 @@ const dataSlice = createSlice({
     
     loading: false,
     error: false,
-    data:"",
+    data:[],
 
 
     
@@ -17,7 +17,7 @@ const dataSlice = createSlice({
       state.error = false;
     },
    getAllSuccess:(state,{payload})=>{
-    state.data=payload;
+    state.data=payload
     state.loading=false;
    },
    

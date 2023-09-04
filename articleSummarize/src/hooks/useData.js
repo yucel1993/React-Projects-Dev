@@ -7,30 +7,16 @@ const useData=()=>{
     const dispatch=useDispatch()
     
     
-    const getAll=async(url)=>{
-        dispatch(fetchStart())
-        const axios = require('axios');
-
-const options = {
-  method: 'GET',
-  url: 'https://article-extractor-and-summarizer.p.rapidapi.com/summarize',
-  params: {
-    url: url,
-    length: '3'
-  },
-  headers: {
-    'X-RapidAPI-Key': import.meta.env.VITE_API_KEY,
-    'X-RapidAPI-Host': 'article-extractor-and-summarizer.p.rapidapi.com'
-  }
-};
-
-try {
-	const response = await axios.request(options);
-	console.log(response.data);
-    dispatch(getAllSuccess(response?.summary));
-} catch (error) {
-	console.error(error);
-}
+    const getAll=async(search)=>{
+       const API=import.meta.env.VITE_API_KEY
+       
+       try {
+        const {data} =await axios(`https://newsapi.org/v2/everything?q=${search}&apiKey=${API}`)
+        console.log(data)
+            dispatch(getAllSuccess(data.articles))
+       } catch (error) {
+        console.log(error)
+       }
 
 
 
