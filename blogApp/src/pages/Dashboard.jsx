@@ -27,7 +27,7 @@ const Dashboard = ({setInfo}) => {
   }
 const data=blogs.data
   return (
-    <div xs={{ marginTop: "3rem" }}>
+    <div xs={{ marginTop: "3rem", }}>
       <Grid
         container
         mt={"1rem"}

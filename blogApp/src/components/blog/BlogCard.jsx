@@ -46,7 +46,7 @@ const BlogCard = ({
   return (
     <Grid>
       <Paper
-        elevation={3}
+        elevation={5}
         sx={{
           width: "15rem",
           padding: "1rem",
@@ -56,11 +56,13 @@ const BlogCard = ({
           justifyContent: "space-between",
           marginLeft: "3rem",
           marginTop: "3rem",
+          borderRadius:"3rem",
+          background: "linear-gradient(#e66465, #9198e5)"
         }}
         padding={10}
       >
         <Box sx={{ textAlign: "center" }}>
-          <img width={"50%"} src={image} alt="" />
+          <img style={{borderRadius:"3rem",padding:"2rem"}} width={"50%"} src={image} alt="" />
           <h2>{title}</h2>
         </Box>
         <p>{limitedContent}</p>

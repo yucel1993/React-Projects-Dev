@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
-
 import { useEffect } from "react";
-import { Grid, Box, Typography } from "@mui/material";
+import { Grid, Box, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom"; 
 import BlogCard from "../components/blog/BlogCard";
 import useBlogCall from "../hooks/useBlogCall";
 
 const MyBlog = () => {
   const { getUserBlogs } = useBlogCall();
   const { draft, loading, error } = useSelector((state) => state.blog);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     getUserBlogs();
@@ -48,7 +49,17 @@ const MyBlog = () => {
             ))}
           </Grid>
         ) : (
-          <div>No data</div>
+          // Render a button when there are no blogs
+          <div>
+            <Typography variant="h4">No blogs found.</Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => navigate("/newblog")} // Navigate to /newblog on button click
+            >
+              Add a Blog
+            </Button>
+          </div>
         )}
       </Box>
     </div>

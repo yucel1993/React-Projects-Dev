@@ -36,15 +36,20 @@ const NewBlog = ({ info, setInfo }) => {
     });
   };
   return (
-    <div style={{ marginTop: "2rem" }}>
+    <div style={{ marginTop: "2rem", }}>
       <Box>
         <Paper
-          elevation={3}
-          sx={{ width: "15rem", padding: "1rem", margin: "auto" }}
-          padding={10}
+           elevation={3}
+           sx={{
+             width: "15rem",
+             padding: "1rem",
+             margin: "auto",
+             
+           }}
+           padding={10}
         >
           <Box
-            sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+            sx={{ display: "flex", flexDirection: "column", gap: 2,backgroundColor: "rgba(255, 255, 255, 0.9)"  }}
             component="form"
             onSubmit={handleSubmit}
           >
