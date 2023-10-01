@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import MovieList from "../MovieList/MovieList";
 import { useEffect } from "react";
 import useMovieCall from "../hooks/useMovieCall";
-import { selectGenreOrCategory } from "../feature/genreOrCategorySlice";
+// import { selectGenreOrCategory } from "../feature/genreOrCategorySlice";
 import { useState } from "react";
 const Movies = () => {
   const {genreIdOrCategoryName} =useSelector((state)=>state.genreOrCategory)
@@ -18,11 +18,11 @@ const Movies = () => {
   const { getMovies,getGenres } = useMovieCall();
   const { movies,loading } = useSelector((state) => state.movies);
   const {searchQuery} =useSelector((state)=>state.genreOrCategory)
-  console.log(searchQuery)
+ 
   useEffect(() => {
-    getMovies(genreIdOrCategoryName, page);
+    getMovies(genreIdOrCategoryName, page,searchQuery);
     getGenres();
-  }, [genreIdOrCategoryName, page]);
+  }, [genreIdOrCategoryName, page, searchQuery]);
 
   if (loading) { // Check the 'loading' property from the Redux state
     return (

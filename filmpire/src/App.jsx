@@ -24,7 +24,7 @@ function App() {
           <Route path="/actors/:id" element={<Actors />} />
 
           <Route path="/" element={<Movies />} />
-
+          
           <Route path="/profile/:id" element={<Profile />} />
         </Routes>
       </main>

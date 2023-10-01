@@ -13,6 +13,7 @@ export const genreOrCategorySlice = createSlice({
      state.searchQuery=""
     },
     searchMovie: (state, {payload}) => {
+     console.log(payload)
       state.searchQuery=payload;
      },
   },

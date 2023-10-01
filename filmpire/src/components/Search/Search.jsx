@@ -12,6 +12,7 @@ const Search = () => {
   const classes = useStyles();
   const handlePress = (event) => {
     if (event.key === "Enter") {
+        
         dispatch(searchMovie(query))
     
     }

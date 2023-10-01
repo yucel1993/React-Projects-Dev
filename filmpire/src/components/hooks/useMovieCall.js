@@ -15,9 +15,19 @@ const useMovieCall = () => {
   const BASE_URL = "https://api.themoviedb.org/3";
   const dispatch = useDispatch();
 
-  const getMovies = async (category, page = 1) => {
+  const getMovies = async (category, page = 1,searchQuery="") => {
     dispatch(fetchStart());
     try {
+        console.log(searchQuery)
+      //* Serach Query
+      if(searchQuery){
+        const { data } = await axios(
+          `${BASE_URL}/search/movie?query=${searchQuery}&page=${page}&api_key=${tmdbApiKey}`
+        );
+        return dispatch(getMoviesSuccess({ data }));
+      }
+      
+
       //*Get Movies by Categories
       if (category && typeof category === "string") {
         const { data } = await axios(
