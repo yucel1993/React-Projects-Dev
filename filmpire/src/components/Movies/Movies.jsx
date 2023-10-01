@@ -17,7 +17,8 @@ const Movies = () => {
 
   const { getMovies,getGenres } = useMovieCall();
   const { movies,loading } = useSelector((state) => state.movies);
-
+  const {searchQuery} =useSelector((state)=>state.genreOrCategory)
+  console.log(searchQuery)
   useEffect(() => {
     getMovies(genreIdOrCategoryName, page);
     getGenres();
