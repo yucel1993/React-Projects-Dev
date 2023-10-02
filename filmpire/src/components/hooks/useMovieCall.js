@@ -5,6 +5,7 @@ import {
   fetchStart,
   getMoviesSuccess,
   getGenresSuccess,
+  getRecommedationSuccess
 } from "../feature/movieSlice";
 
 // Import the API key correctly
@@ -68,7 +69,22 @@ const useMovieCall = () => {
     }
   };
 
-  return { getMovies, getGenres };
+  const getRecommendation = async ({list, movie_id}) => {
+    console.log("getrecomeme",movie_id,list)
+    dispatch(fetchStart());
+    try {
+      const { data } = await axios(
+        `${BASE_URL}/movie/${movie_id}/${list}?api_key=${tmdbApiKey}`
+      );
+      dispatch(getRecommedationSuccess({ data }));
+    } catch (error) {
+      dispatch(fetchFail());
+      console.log(error);
+    }
+  };
+
+
+  return { getMovies, getGenres,getRecommendation };
 };
 
 export default useMovieCall;

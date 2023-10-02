@@ -7,6 +7,7 @@ const movieSlice = createSlice({
     error: false,
     movies: [],
     genres: [],
+    recommendation:[]
   },
   reducers: {
     fetchStart: (state) => {
@@ -26,6 +27,10 @@ const movieSlice = createSlice({
       state.genres = data;
       state.loading = false;
     },
+    getRecommedationSuccess: (state, { payload: { data } }) => {
+      state.recommendation = data;
+      state.loading = false;
+    },
 
     fetchFail: (state) => {
       state.loading = false;
@@ -34,5 +39,5 @@ const movieSlice = createSlice({
   },
 });
 
-export const { fetchStart, getMoviesSuccess,getGenresSuccess, fetchFail } = movieSlice.actions;
+export const { fetchStart, getMoviesSuccess,getGenresSuccess,getRecommedationSuccess, fetchFail } = movieSlice.actions;
 export default movieSlice.reducer;
