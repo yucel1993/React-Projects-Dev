@@ -1,11 +1,12 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useParams,useNavigate  } from "react-router-dom";
-import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import axios from "axios";
 import useStyle from "./styles";
 import MovieList from "../MovieList/MovieList";
+// import Pagination from "../Pagination/Pagination";
 const tmdbApiKey = import.meta.env.VITE_APP_TMDB_KEY;
 
 const BASE_URL = "https://api.themoviedb.org/3";
@@ -13,6 +14,7 @@ const page=1
 const Aktors = () => {
   const { id } = useParams();
   const [actor, setActor] = useState([]);
+  // const [page , setPage ] = useState(1)
   const [actorMovies , setActorMovies ] = useState([])
   const navigate = useNavigate();
   const classes = useStyle();
@@ -86,6 +88,7 @@ const Aktors = () => {
       <Box marginTop={"2rem o"}>
         <Typography variant="h2" gutterBottom align="center"> Movies</Typography>
         {actorMovies ? <MovieList movies={actorMovies} numberOfMovies={12} /> : ""}
+        {/* <Pagination currentPage={page} setPage={setPage} totalPages={actorMovies?.total_pages} /> */}
       </Box>
     </>
   );

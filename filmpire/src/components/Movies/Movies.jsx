@@ -16,6 +16,8 @@ const Movies = () => {
   const {genreIdOrCategoryName} =useSelector((state)=>state.genreOrCategory)
   const [page , setPage ] = useState(1)
 
+  const lg =useMediaQuery((theme)=>theme.breakpoints.only("lg"))
+  const numberOfMovies = lg ? 16 : 18;
   const { getMovies,getGenres } = useMovieCall();
   const { movies,loading } = useSelector((state) => state.movies);
   const {searchQuery} =useSelector((state)=>state.genreOrCategory)
@@ -46,7 +48,7 @@ const Movies = () => {
 
   return (
     <div>
-      <MovieList movies={movies} />
+      <MovieList movies={movies} numberOfMovies={numberOfMovies}  />
       <Pagination currentPage={page} setPage={setPage}  totalPages={movies?.total_pages} />
     </div>
   );
