@@ -92,7 +92,7 @@ const MovieInformation = () => {
               </Typography>
             </Box>
             <Typography variant="h6" align="center">
-              {info?.runtime}min{" "}
+              {info?.runtime}min{" "}-{" "}
               {info?.spoken_languages?.length > 0
                 ? `${info?.spoken_languages[0].name}`
                 : ""}

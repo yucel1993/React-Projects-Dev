@@ -21,6 +21,8 @@ import useStyles from "./styles";
 import { Brightness1 } from "@mui/icons-material";
 import { useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
+import { useContext } from "react";
+import { ColorModeContext } from "../../utills/ToggleColorMode";
 
 
 const Navbar = () => {
@@ -30,6 +32,7 @@ const Navbar = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
   const theme = useTheme();
   const isAuthenticated = true;
+  const colorMode =useContext(ColorModeContext)
   return (
     <>
       <AppBar position="fixed" >
@@ -45,7 +48,7 @@ const Navbar = () => {
               <Menu />
             </IconButton>
           )}
-          <IconButton color="inherit" sx={{ ml: 1 }} onClick={() => {}}>
+          <IconButton color="inherit" sx={{ ml: 1 }} onClick={colorMode.toggleColorMode}>
             {theme.palette.mode === "dark" ? <Brightness7 /> : <Brightness4 />}
           </IconButton>
             {!isMobile && <Search />}
