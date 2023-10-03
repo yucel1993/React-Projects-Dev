@@ -12,6 +12,7 @@ import useMovieCall from "../hooks/useMovieCall";
 // import { selectGenreOrCategory } from "../feature/genreOrCategorySlice";
 import { useState } from "react";
 import Pagination from "../Pagination/Pagination";
+import FeaturedMovie from "../FeaturedMovie/FeaturedMovie";
 const Movies = () => {
   const {genreIdOrCategoryName} =useSelector((state)=>state.genreOrCategory)
   const [page , setPage ] = useState(1)
@@ -48,6 +49,7 @@ const Movies = () => {
 
   return (
     <div>
+    <FeaturedMovie movie={movies?.results[0]} />
       <MovieList movies={movies} numberOfMovies={numberOfMovies}  />
       <Pagination currentPage={page} setPage={setPage}  totalPages={movies?.total_pages} />
     </div>

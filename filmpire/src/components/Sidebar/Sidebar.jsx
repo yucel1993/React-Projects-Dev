@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import genreIcons from "../../assets/genres"
 import { useDispatch } from "react-redux";
 import { selectGenreOrCategory } from "../feature/genreOrCategorySlice";
+import { useEffect } from "react";
 
 const categories =[
   {label:"Popular", value: "Popular"},
@@ -24,7 +25,6 @@ const categories =[
 ]
 
 const Sidebar = ({ setMobileOpen }) => {
-  const {genreIdOrCategoryName} =useSelector((state)=>state.genreOrCategory)
   const dispatch=useDispatch();
   const  {genres,loading}=useSelector((state)=>state.movies)
   console.log(genres)
@@ -35,7 +35,12 @@ const Sidebar = ({ setMobileOpen }) => {
 
   const blueLogo =
     "https://fontmeme.com/permalink/210930/6854ae5c7f76597cf8680e48a2c8a50a.png";
-  return (
+  
+  useEffect(() => {
+    setMobileOpen(false)
+  }, [genres])
+  
+    return (
     <>
       <Link to="/" className={classes.imageLink}>
         <img
