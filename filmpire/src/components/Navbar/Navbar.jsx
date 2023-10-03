@@ -14,14 +14,13 @@ import {
   Brightness4,
   Brightness7,
 } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import {Search} from ".."
 import useStyles from "./styles";
-import { Brightness1 } from "@mui/icons-material";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Sidebar from "../Sidebar/Sidebar";
-import { useContext } from "react";
+
 import { ColorModeContext } from "../../utills/ToggleColorMode";
 
 
@@ -29,9 +28,10 @@ const Navbar = () => {
    
     const [mobileOpen , setMobileOpen ] = useState(false)
   const classes = useStyles();
+  const navigate=useNavigate()
   const isMobile = useMediaQuery("(max-width:600px)");
   const theme = useTheme();
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   const colorMode =useContext(ColorModeContext)
   return (
     <>
@@ -54,14 +54,14 @@ const Navbar = () => {
             {!isMobile && <Search />}
             <div>
               {!isAuthenticated ? (
-                <Button color="inherit" onClick={() => {}}>
+                <Button color="inherit" onClick={() => navigate("/profile")}>
                   Login &nbsp; <AccountCircle />
                 </Button>
               ) : (
                 <Button
                   color="inherit"
                   component={Link}
-                  to={`/profile/:id`}
+                  to={`/profile`}
                   className={classes.linkButton}
                   onClick={() => {}}
                 >
