@@ -17,6 +17,7 @@ import genreIcons from "../../assets/genres"
 import { useDispatch } from "react-redux";
 import { selectGenreOrCategory } from "../feature/genreOrCategorySlice";
 import { useEffect } from "react";
+import { useState } from "react";
 
 const categories =[
   {label:"Popular", value: "Popular"},
@@ -25,8 +26,9 @@ const categories =[
 ]
 
 const Sidebar = ({ setMobileOpen }) => {
+  const [loading, setLoading] = useState(true); 
   const dispatch=useDispatch();
-  const  {genres,loading}=useSelector((state)=>state.movies)
+  const  {genres}=useSelector((state)=>state.movies)
   console.log(genres)
   const classes=useStyle()
   const theme = useTheme();
@@ -36,8 +38,15 @@ const Sidebar = ({ setMobileOpen }) => {
   const blueLogo =
     "https://fontmeme.com/permalink/210930/6854ae5c7f76597cf8680e48a2c8a50a.png";
   
+    
+ 
+
+
   useEffect(() => {
     setMobileOpen(false)
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000); // 2000 milliseconds (2 seconds)
   }, [genres])
   
     return (
@@ -84,7 +93,7 @@ const Sidebar = ({ setMobileOpen }) => {
         </ListSubheader>
 
 
-        { loading ? (
+        {loading ? (
       <Box display="flex" justifyContent={"center"}>
         <CircularProgress size="4rem" />
       </Box>

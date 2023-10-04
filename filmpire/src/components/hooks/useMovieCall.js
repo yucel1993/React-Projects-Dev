@@ -5,8 +5,10 @@ import {
   fetchStart,
   getMoviesSuccess,
   getGenresSuccess,
-  getRecommedationSuccess
+  getRecommedationSuccess,
+  
 } from "../feature/movieSlice";
+import { getFavoriteOrWatchListSuccess } from "../feature/favoriteOrWatchListSlice";
 
 // Import the API key correctly
 
@@ -84,7 +86,25 @@ const useMovieCall = () => {
   };
 
 
-  return { getMovies, getGenres,getRecommendation };
+  const getFavoriteOrWatchList = async ({word, movie_id}) => {
+    console.log("favorite or WatchList",word,movie_id)
+    
+    try {
+      const { data } = await axios(
+        `${BASE_URL}/movie/${movie_id}?append_to_response=videos,credits&api_key=${tmdbApiKey}`
+      );
+      dispatch(getFavoriteOrWatchListSuccess({word, data }));
+      console.log("getFavori or watchlist mopvie:",data,word)
+    } catch (error) {
+      
+      console.log(error);
+    }
+  };
+  
+
+
+
+  return { getMovies, getGenres,getRecommendation,getFavoriteOrWatchList };
 };
 
 export default useMovieCall;

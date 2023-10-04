@@ -41,8 +41,9 @@ const MovieInformation = () => {
   const [info, setInfo] = useState([]);
   const { recommendation } = useSelector((state) => state.movies);
   const dispatch = useDispatch();
-  const { getRecommendation } = useMovieCall();
-  console.log(recommendation);
+ 
+  const { getRecommendation,getFavoriteOrWatchList } = useMovieCall();
+  
   const getInfo = async (id) => {
     try {
       const { data } = await axios(
@@ -56,8 +57,15 @@ const MovieInformation = () => {
   };
   const isMovieFavorited = true;
   const isMovieWatchListed = true;
-  const addToFavorites = () => {};
-  const addToWatchList = () => {};
+  const addToFavorites = () => {
+    console.log("CONTRO-1 : ", id);
+    getFavoriteOrWatchList({ word: "favoriteMovies", movie_id: id });
+  };
+  
+  const addToWatchList = () => {
+    console.log("CONTRO-2 : ", id);
+    getFavoriteOrWatchList({ word: "watchListMovies", movie_id: id });
+  };
   useEffect(() => {
     getInfo(id);
     getRecommendation({ list: "/recommendations", movie_id: id });
