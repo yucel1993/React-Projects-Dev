@@ -44,10 +44,9 @@ export default function Login() {
   const { signIn, signUpProvider, forgotPassword } = useContext(AuthContext);
   const handleSubmit = (event) => {
     event.preventDefault();
-    
+
     signIn(email, password);
   };
-  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -73,6 +72,7 @@ export default function Login() {
             noValidate
             sx={{ mt: 1 }}
           >
+            <Typography>Email : black@gmail.com</Typography>
             <TextField
               margin="normal"
               required
@@ -84,6 +84,8 @@ export default function Login() {
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
             />
+
+            <Typography>Password : 123456</Typography>
             <TextField
               margin="normal"
               required
@@ -117,11 +119,9 @@ export default function Login() {
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
-                <span
-               onClick={() => forgotPassword(email)}
-            >
-              Forgot Password
-            </span>
+                  <span onClick={() => forgotPassword(email)}>
+                    Forgot Password
+                  </span>
                 </Link>
               </Grid>
               <Grid item>
