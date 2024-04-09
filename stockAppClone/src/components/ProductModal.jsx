@@ -29,7 +29,6 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
     postAll("products", info);
   };
 
-  
   console.log(info);
   return (
     <Modal

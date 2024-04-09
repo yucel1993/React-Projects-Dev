@@ -7,10 +7,17 @@ import { useSelector } from "react-redux";
 import { btnStyle } from "../GlobalStyles/styles";
 import useStockCall from "../hooks/useStockCall";
 
-export default function PurchaseCard({setInfo,handleOpen}) {
-  const {deleteAll} = useStockCall()
+export default function PurchaseCard({ setInfo, handleOpen }) {
+  const { deleteAll } = useStockCall();
   const { purchases } = useSelector((state) => state.stock);
   console.log(purchases);
+
+  const processedPurchases = purchases.map((purchase) => ({
+    ...purchase,
+    firmName: purchase.firm_id.name,
+    brandName: purchase.brand_id.name,
+    productName: purchase.product_id.name,
+  }));
   const columns = [
     {
       field: "id",
@@ -27,21 +34,21 @@ export default function PurchaseCard({setInfo,handleOpen}) {
       flex: 1,
     },
     {
-      field: "firm",
+      field: "firmName",
       headerName: "Firm",
       align: "center",
       headerAlign: "center",
       flex: 1,
     },
     {
-      field: "brand",
+      field: "brandName",
       headerName: "Brand",
       align: "center",
       headerAlign: "center",
       flex: 1,
     },
     {
-      field: "product",
+      field: "productName",
       headerName: "Product",
       align: "center",
       headerAlign: "center",
@@ -66,7 +73,7 @@ export default function PurchaseCard({setInfo,handleOpen}) {
     {
       field: "price_total",
       headerName: "Amount",
-    
+
       headerAlign: "center",
       align: "center",
       flex: 1,
@@ -85,9 +92,8 @@ export default function PurchaseCard({setInfo,handleOpen}) {
           label="Delete"
           sx={btnStyle}
           onClick={() => {
-            
-            setInfo(props.row)
-            handleOpen()
+            setInfo(props.row);
+            handleOpen();
           }}
         />,
       ],
@@ -108,13 +114,12 @@ export default function PurchaseCard({setInfo,handleOpen}) {
         />,
       ],
     },
-
   ];
 
   return (
-    <Box sx={{ width: "100%",marginTop:"2rem" }}>
+    <Box sx={{ width: "100%", marginTop: "2rem" }}>
       <DataGrid
-        rows={purchases}
+        rows={processedPurchases}
         columns={columns}
         initialState={{
           pagination: {

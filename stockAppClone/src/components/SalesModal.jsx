@@ -15,7 +15,7 @@ import { useSelector } from "react-redux";
 import useStockCall from "../hooks/useStockCall";
 
 export default function SalesModal({ info, setInfo, open, handleClose }) {
-    const {postAll,putAll} =useStockCall()
+  const { postAll, putAll } = useStockCall();
   const { brands, products } = useSelector((state) => state.stock);
 
   const handleChange = (e) => {
@@ -24,10 +24,10 @@ export default function SalesModal({ info, setInfo, open, handleClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const quantity =parseInt(info.quantity)
-    const updatedInfo={...info,quantity}
-    info.id ?  putAll("sales",updatedInfo) : postAll("sales",updatedInfo)
-    handleClose()
+    const quantity = parseInt(info.quantity);
+    const updatedInfo = { ...info, quantity };
+    info.id ? putAll("sales", updatedInfo) : postAll("sales", updatedInfo);
+    handleClose();
   };
 
   return (
@@ -39,7 +39,7 @@ export default function SalesModal({ info, setInfo, open, handleClose }) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <form onSubmit={handleSubmit} >
+          <form onSubmit={handleSubmit}>
             <FormControl fullWidth>
               <InputLabel id="brand">Brand</InputLabel>
               <Select
@@ -47,7 +47,7 @@ export default function SalesModal({ info, setInfo, open, handleClose }) {
                 id="brand"
                 label="brand"
                 name="brand_id"
-                value={info?.brand_id || ""}
+                value={info?.brand_id?._id || ""}
                 onChange={handleChange}
               >
                 {brands.map((item, index) => (
@@ -58,16 +58,15 @@ export default function SalesModal({ info, setInfo, open, handleClose }) {
               </Select>
             </FormControl>
 
-            <FormControl fullWidth sx={{marginTop:"1.2rem"}} >
+            <FormControl fullWidth sx={{ marginTop: "1.2rem" }}>
               <InputLabel id="product">Product</InputLabel>
               <Select
-               fullWidth
-               
+                fullWidth
                 labelId="product"
                 id="product"
                 label="product"
                 name="product_id"
-                value={info?.product_id || ""}
+                value={info?.product_id?._id || ""}
                 onChange={handleChange}
               >
                 {products.map((item, index) => (

@@ -16,8 +16,7 @@ import useStockCall from "../hooks/useStockCall";
 
 export default function PurchaseModal({ info, setInfo, open, handleClose }) {
   const { firms, brands, products } = useSelector((state) => state.stock);
-  const {postAll,putAll}=useStockCall()
-  
+  const { postAll, putAll } = useStockCall();
 
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
@@ -27,10 +26,12 @@ export default function PurchaseModal({ info, setInfo, open, handleClose }) {
     e.preventDefault();
     const quantity = parseInt(info.quantity); //! Parse the quantity value to an integer
     const updatedInfo = { ...info, quantity }; //! Create a new object with the updated quantity
-    
-    info.id ? putAll("purchases",updatedInfo) :  postAll("purchases", updatedInfo);
-    
-    handleClose()
+
+    info.id
+      ? putAll("purchases", updatedInfo)
+      : postAll("purchases", updatedInfo);
+
+    handleClose();
   };
 
   return (
@@ -53,7 +54,7 @@ export default function PurchaseModal({ info, setInfo, open, handleClose }) {
                 id="demo-simple-select"
                 label="Firm"
                 name="firm_id"
-                value={info?.firm_id || ""}
+                value={info?.firm_id?._id || ""}
                 onChange={handleChange}
               >
                 {firms.map((item, index) => (
@@ -70,7 +71,7 @@ export default function PurchaseModal({ info, setInfo, open, handleClose }) {
                 id="demo-simple-select"
                 label="Brand"
                 name="brand_id"
-                value={info?.brand_id || ""}
+                value={info?.brand_id?._id || ""}
                 onChange={handleChange}
               >
                 {brands.map((item, index) => (
@@ -85,7 +86,7 @@ export default function PurchaseModal({ info, setInfo, open, handleClose }) {
                 id="demo-simple-select"
                 label="Brand"
                 name="product_id"
-                value={info?.product_id || ""}
+                value={info?.product_id?._id || ""}
                 onChange={handleChange}
               >
                 {products.map((item, index) => (

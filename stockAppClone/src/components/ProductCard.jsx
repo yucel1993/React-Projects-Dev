@@ -10,6 +10,11 @@ export default function ProductCard() {
   const { products } = useSelector((state) => state.stock);
   const { deleteAll } = useStockCall();
   console.log(products);
+  const processedProducts = products.map((product) => ({
+    ...product,
+    categoryName: product.category_id.name,
+    brandName: product.brand_id.name,
+  }));
   const columns = [
     {
       field: "id",
@@ -19,14 +24,14 @@ export default function ProductCard() {
       flex: 1,
     },
     {
-      field: "category",
+      field: "categoryName",
       headerName: "Category",
       align: "center",
       headerAlign: "center",
       flex: 1,
     },
     {
-      field: "brand",
+      field: "brandName",
       headerName: "Brand",
       align: "center",
       headerAlign: "center",
@@ -70,7 +75,7 @@ export default function ProductCard() {
     <Box mt={4} sx={{ width: "100%" }}>
       <DataGrid
         autoHeight
-        rows={products}
+        rows={processedProducts}
         columns={columns}
         initialState={{
           pagination: {
