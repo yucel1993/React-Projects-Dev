@@ -39,21 +39,6 @@ export default function ProductCard() {
       headerAlign: "center",
       flex: 1,
     },
-    {
-      field: "dateOfBirth",
-      headerName: "Date of Birth",
-      align: "center",
-      headerAlign: "center",
-      flex: 1,
-      valueGetter: (params) => {
-        // Check if dateOfBirth is defined before calling toLocaleDateString
-        if (params.row.dateOfBirth) {
-          return new Date(params.row.dateOfBirth).toLocaleDateString();
-        } else {
-          return "N/A";
-        }
-      },
-    },
 
     {
       field: "stock",
